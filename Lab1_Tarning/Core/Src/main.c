@@ -51,10 +51,24 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
 /* USER CODE BEGIN PFP */
-
+int is_blue_button_pressed();
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
+int is_blue_button_pressed()
+{
+	uint32_t reg_idr = GPIOC->IDR;
+	uint16_t pin_b1	 = (1<<13);
+
+	if ((reg_idr & pin_b1)== 0){
+		return 1;
+	}
+	else {
+		return 0;
+	}
+
+}
+
 /* USER CODE BEGIN 0 */
 
 /* USER CODE END 0 */
@@ -95,8 +109,22 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  int pressed = 0;
   while (1)
   {
+	  pressed = is_blue_button_pressed();
+	  if (pressed)
+	  {
+		  HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET);
+	  }
+	  else
+	  {
+		  HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
+
+	  }
+
+
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
