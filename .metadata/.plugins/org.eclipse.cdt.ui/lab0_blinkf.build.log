@@ -1,0 +1,10 @@
+11:40:25 **** Incremental Build of configuration Debug for project lab0_blinkf ****
+make -j8 all 
+arm-none-eabi-size  lab0_blinkf.elf 
+   text	   data	    bss	    dec	    hex	filename
+  11132	     92	   1972	  13196	   338c	lab0_blinkf.elf
+Finished building: default.size.stdout
+ 
+
+11:40:25 Build Finished. 0 errors, 0 warnings. (took 115ms)
+
