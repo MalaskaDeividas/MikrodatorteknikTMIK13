@@ -1,4 +1,4 @@
-19:12:04 **** Incremental Build of configuration Debug for project Lab1_Tarning ****
+21:38:26 **** Incremental Build of configuration Debug for project Lab1_Tarning ****
 make -j8 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
 arm-none-eabi-gcc -o "Lab1_Tarning.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/deividas/School/Prog/MKLabbar/MikrodatorteknikTMIK13/Lab1_Tarning/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Lab1_Tarning.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
@@ -7,11 +7,11 @@ Finished building target: Lab1_Tarning.elf
 arm-none-eabi-size  Lab1_Tarning.elf 
 arm-none-eabi-objdump -h -S Lab1_Tarning.elf  > "Lab1_Tarning.list"
    text	   data	    bss	    dec	    hex	filename
-   7836	     12	   1644	   9492	   2514	Lab1_Tarning.elf
+   8572	     12	   1644	  10228	   27f4	Lab1_Tarning.elf
 Finished building: default.size.stdout
  
 Finished building: Lab1_Tarning.list
  
 
-19:12:05 Build Finished. 0 errors, 0 warnings. (took 319ms)
+21:38:27 Build Finished. 0 errors, 0 warnings. (took 323ms)
 
