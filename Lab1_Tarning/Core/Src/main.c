@@ -53,7 +53,10 @@ static void MX_USART2_UART_Init(void);
 /* USER CODE BEGIN PFP */
 int is_blue_button_pressed();
 void put_die_dots(uint8_t);
-const uint8_t sseg[10] = {0x3F,0x30,0x5B,0x4F,0x66,0x6D,0x7D,0x07,0x7F,0x6F,0xDC}; //0123456789err
+
+//sseg
+void put_on_sseg(uint8_t);
+
 
 /* USER CODE END PFP */
 
@@ -62,13 +65,6 @@ int is_blue_button_pressed()
 {
 	uint32_t reg_idr = GPIOC->IDR;
 	uint16_t pin_b1	 = (1<<13);
-	HAL_GPIO_WritePin(DI_A_GPIO_Port, DI_A_Pin, GPIO_PIN_RESET);
-	HAL_GPIO_WritePin(DI_B_GPIO_Port, DI_B_Pin, GPIO_PIN_RESET);
-	HAL_GPIO_WritePin(DI_C_GPIO_Port, DI_C_Pin, GPIO_PIN_RESET);
-	HAL_GPIO_WritePin(DI_D_GPIO_Port, DI_D_Pin, GPIO_PIN_RESET);
-	HAL_GPIO_WritePin(DI_E_GPIO_Port, DI_E_Pin, GPIO_PIN_RESET);
-	HAL_GPIO_WritePin(DI_F_GPIO_Port, DI_F_Pin, GPIO_PIN_RESET);
-	HAL_GPIO_WritePin(DI_G_GPIO_Port, DI_G_Pin, GPIO_PIN_RESET);
 
 	if ((reg_idr & pin_b1)== 0){
 		return 1;
@@ -76,6 +72,13 @@ int is_blue_button_pressed()
 	else {
 		return 0;
 	}
+	HAL_GPIO_WritePin(DI_A_GPIO_Port, DI_A_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(DI_B_GPIO_Port, DI_B_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(DI_C_GPIO_Port, DI_C_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(DI_D_GPIO_Port, DI_D_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(DI_E_GPIO_Port, DI_E_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(DI_F_GPIO_Port, DI_F_Pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(DI_G_GPIO_Port, DI_G_Pin, GPIO_PIN_RESET);
 
 }
 
@@ -166,16 +169,29 @@ void put_die_dots(uint8_t die_nbr){
 		HAL_GPIO_WritePin(DI_G_GPIO_Port, DI_G_Pin, GPIO_PIN_SET);
 		break;
 	}
-
-
-
-
-
-
 }
 
 
 /* USER CODE BEGIN 0 */
+const uint8_t sseg[] = {0x3F,0x6,0x5B,0x4F,0x66,0x6D,0x7D,0x07,0x7F,0x6F};
+const uint8_t sseg_err = 0xDC;
+
+void put_on_sseg(uint8_t dec_nbr){
+	uint8_t sseg_val;
+
+	if ((dec_nbr >= 0) & (dec_nbr <= 9)){
+		GPIOC->ODR  = sseg[dec_nbr];
+	}
+	else
+	{
+		sseg_val = sseg_err;
+	}
+	//GPIOC->ODR = sseg_val;
+
+}
+
+
+
 
 /* USER CODE END 0 */
 
@@ -218,7 +234,7 @@ int main(void)
   HAL_Init();
 
 
-
+  int sseg_die		  = 0;
   int pressed = 0;
   uint8_t die_value = 0;
   while (1)
@@ -232,9 +248,18 @@ int main(void)
 		  if(die_value > 6){
 			  die_value = 1;
 		  }
+
+		  sseg_die++;
+		  if(sseg_die > 9){
+			  sseg_die = 0;
+		  }
+
+
+
 	  }
 	  else
 	  {
+		  put_on_sseg(sseg_die);
 		  put_die_dots(die_value);
 		  HAL_Delay(1);
 		  //HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
