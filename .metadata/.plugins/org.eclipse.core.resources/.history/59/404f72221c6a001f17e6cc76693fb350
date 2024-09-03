@@ -64,11 +64,10 @@ static void MX_USART2_UART_Init(void);
 
 	enum state {
 		s_init,
-		s_R_R,
-		s_R_G,
-		s_RY_R,
-		s_G_R,
-		s_Y_R
+		s_car_go,
+		s_car_wait,
+		s_car_stopping,
+		s_passenger_go
 	};
 
 void set_traffic_lights(enum state s){
@@ -77,62 +76,37 @@ void set_traffic_lights(enum state s){
 
 		case s_init:
 			//Car Lights on
-			HAL_GPIO_WritePin(CAR_A_GPIO_Port, CAR_A_Pin, GPIO_PIN_SET); //Red
-			HAL_GPIO_WritePin(CAR_B_GPIO_Port, CAR_B_Pin, GPIO_PIN_SET); //Yellow
-			HAL_GPIO_WritePin(CAR_C_GPIO_Port, CAR_C_Pin, GPIO_PIN_SET); //Green
+			HAL_GPIO_WritePin(CAR_A_GPIO_Port, CAR_A_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(CAR_B_GPIO_Port, CAR_B_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(CAR_C_GPIO_Port, CAR_C_Pin, GPIO_PIN_SET);
 
 			//Passer Lights on
-			HAL_GPIO_WritePin(P_D_GPIO_Port, P_D_Pin, GPIO_PIN_SET); //Green
-			HAL_GPIO_WritePin(P_E_GPIO_Port, P_E_Pin, GPIO_PIN_SET); //Red
+			HAL_GPIO_WritePin(P_D_GPIO_Port, P_D_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(P_E_GPIO_Port, P_E_Pin, GPIO_PIN_SET);
 		break;
 
-		case s_R_R:
-			//Car Red
-			HAL_GPIO_WritePin(CAR_A_GPIO_Port, CAR_A_Pin, GPIO_PIN_SET);
+		case s_car_go:
+			//Car Green
+			HAL_GPIO_WritePin(CAR_C_GPIO_Port, CAR_C_Pin, GPIO_PIN_SET);
 			//Passer Red
-			HAL_GPIO_WritePin(P_E_GPIO_Port, P_E_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(P_D_GPIO_Port, P_D_Pin, GPIO_PIN_SET);
 
 			//Rest off
+			HAL_GPIO_WritePin(CAR_A_GPIO_Port, CAR_A_Pin, GPIO_PIN_RESET);
 			HAL_GPIO_WritePin(CAR_B_GPIO_Port, CAR_B_Pin, GPIO_PIN_RESET);
-			HAL_GPIO_WritePin(CAR_C_GPIO_Port, CAR_C_Pin, GPIO_PIN_RESET);
-			HAL_GPIO_WritePin(P_D_GPIO_Port, P_D_Pin, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(P_E_GPIO_Port, P_E_Pin, GPIO_PIN_RESET);
 		break;
 
-		case s_R_G:
-		        HAL_GPIO_WritePin(CAR_A_GPIO_Port, CAR_A_Pin, GPIO_PIN_SET);
-		        HAL_GPIO_WritePin(CAR_E_GPIO_Port, CAR_E_Pin, GPIO_PIN_SET);
-		        //Reset rest
-		        HAL_GPIO_WritePin(CAR_B_GPIO_Port, CAR_B_Pin, GPIO_PIN_RESET);
-		        HAL_GPIO_WritePin(CAR_C_GPIO_Port, CAR_C_Pin, GPIO_PIN_RESET);
-		        HAL_GPIO_WritePin(CAR_D_GPIO_Port, CAR_D_Pin, GPIO_PIN_RESET);
-		        break;
-		    case s_RY_R:
-		        HAL_GPIO_WritePin(CAR_A_GPIO_Port, CAR_A_Pin, GPIO_PIN_SET);
-		        HAL_GPIO_WritePin(CAR_B_GPIO_Port, CAR_B_Pin, GPIO_PIN_SET);
-		        HAL_GPIO_WritePin(CAR_D_GPIO_Port, CAR_D_Pin, GPIO_PIN_SET);
-		        //Reset rest
-		        HAL_GPIO_WritePin(CAR_C_GPIO_Port, CAR_C_Pin, GPIO_PIN_RESET);
-		        HAL_GPIO_WritePin(CAR_E_GPIO_Port, CAR_E_Pin, GPIO_PIN_RESET);
-		        break;
-		    case s_G_R:
-		        HAL_GPIO_WritePin(CAR_C_GPIO_Port, CAR_C_Pin, GPIO_PIN_SET);
-		        HAL_GPIO_WritePin(CAR_D_GPIO_Port, CAR_D_Pin, GPIO_PIN_SET);
-		        // Reset rest
-		        HAL_GPIO_WritePin(CAR_A_GPIO_Port, CAR_A_Pin, GPIO_PIN_RESET);
-		        HAL_GPIO_WritePin(CAR_B_GPIO_Port, CAR_B_Pin, GPIO_PIN_RESET);
-		        HAL_GPIO_WritePin(CAR_E_GPIO_Port, CAR_E_Pin, GPIO_PIN_RESET);
-		        break;
-		    case s_Y_R:
-		        HAL_GPIO_WritePin(CAR_B_GPIO_Port, CAR_B_Pin, GPIO_PIN_SET);
-		        HAL_GPIO_WritePin(CAR_D_GPIO_Port, CAR_D_Pin, GPIO_PIN_SET);
-		        // Reset rest
-		        HAL_GPIO_WritePin(CAR_A_GPIO_Port, CAR_A_Pin, GPIO_PIN_RESET);
-		        HAL_GPIO_WritePin(CAR_C_GPIO_Port, CAR_C_Pin, GPIO_PIN_RESET);
-		        HAL_GPIO_WritePin(CAR_E_GPIO_Port, CAR_E_Pin, GPIO_PIN_RESET);
-		        break;
-		    default:
+		case s_car_wait:
 
-		    }
+			//Car Yellow
+			HAL_GPIO_WritePin(CAR_B_GPIO_Port, CAR_B_Pin, GPIO_PIN_SET);
+			//Passer Red
+			HAL_GPIO_WritePin(P_D_GPIO_Port, P_D_Pin, GPIO_PIN_SET);
+
+			//Rest off
+			HAL_GPIO_WritePin(CAR_A_GPIO_Port, CAR_A_Pin, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(CAR_C_GPIO_Port, CAR_C_Pin, GPIO_PIN_RESET);
 
 		}
 
