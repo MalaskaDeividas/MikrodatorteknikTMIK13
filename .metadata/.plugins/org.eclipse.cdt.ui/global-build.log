@@ -892,3 +892,83 @@ arm-none-eabi-gcc "../Core/Src/system_stm32f4xx.c" -mcpu=cortex-m4 -std=gnu11 -g
 make: *** [Core/Src/subdir.mk:34: Core/Src/main.o] Error 1
 make: *** Waiting for unfinished jobs....
 "make -j8 all" terminated with exit code 2. Build might be incomplete.
+18:42:41 **** Incremental Build of configuration Debug for project Lab2_trafikljus ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'set_traffic_lights':
+../Core/Src/main.c:77:17: error: 'event' undeclared (first use in this function)
+   77 |                 event = read_event();
+      |                 ^~~~~
+../Core/Src/main.c:77:17: note: each undeclared identifier is reported only once for each function it appears in
+../Core/Src/main.c:77:25: warning: implicit declaration of function 'read_event' [-Wimplicit-function-declaration]
+   77 |                 event = read_event();
+      |                         ^~~~~~~~~~
+../Core/Src/main.c:78:20: error: 'state' undeclared (first use in this function)
+   78 |                 if(state == s_init){
+      |                    ^~~~~
+../Core/Src/main.c:80:43: error: 'CAR_A' undeclared (first use in this function)
+   80 |                         HAL_GPIO_WritePin(CAR_A , GPIO_Pin, PinState)
+      |                                           ^~~~~
+../Core/Src/main.c:80:51: error: 'GPIO_Pin' undeclared (first use in this function); did you mean 'GPIO_PinState'?
+   80 |                         HAL_GPIO_WritePin(CAR_A , GPIO_Pin, PinState)
+      |                                                   ^~~~~~~~
+      |                                                   GPIO_PinState
+../Core/Src/main.c:80:61: error: 'PinState' undeclared (first use in this function)
+   80 |                         HAL_GPIO_WritePin(CAR_A , GPIO_Pin, PinState)
+      |                                                             ^~~~~~~~
+../Core/Src/main.c:80:70: error: expected ';' before '}' token
+   80 |                         HAL_GPIO_WritePin(CAR_A , GPIO_Pin, PinState)
+      |                                                                      ^
+      |                                                                      ;
+......
+   84 |                 }
+      |                 ~                                                     
+make: *** [Core/Src/subdir.mk:34: Core/Src/main.o] Error 1
+"make -j8 all" terminated with exit code 2. Build might be incomplete.
+19:09:55 **** Build of configuration Debug for project Lab0_blinky_ff ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:108:21: warning: implicit declaration of function 'sprintf' [-Wimplicit-function-declaration]
+  108 |           str_len = sprintf(str, "Blinky has succeeded %d times!\r\n", nblink);
+      |                     ^~~~~~~
+../Core/Src/main.c:21:1: note: include '<stdio.h>' or provide a declaration of 'sprintf'
+   20 | #include "main.h"
+  +++ |+#include <stdio.h>
+   21 | 
+../Core/Src/main.c:108:21: warning: incompatible implicit declaration of built-in function 'sprintf' [-Wbuiltin-declaration-mismatch]
+  108 |           str_len = sprintf(str, "Blinky has succeeded %d times!\r\n", nblink);
+      |                     ^~~~~~~
+../Core/Src/main.c:108:21: note: include '<stdio.h>' or provide a declaration of 'sprintf'
+arm-none-eabi-gcc -o "Lab0_blinky_ff.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/deividas/School/Prog/MKLabbar/MikrodatorteknikTMIK13/Lab0_blinky_ff/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Lab0_blinky_ff.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Lab0_blinky_ff.elf
+ 
+arm-none-eabi-size  Lab0_blinky_ff.elf 
+arm-none-eabi-objdump -h -S Lab0_blinky_ff.elf  > "Lab0_blinky_ff.list"
+   text	   data	    bss	    dec	    hex	filename
+  11132	     92	   1972	  13196	   338c	Lab0_blinky_ff.elf
+Finished building: default.size.stdout
+ 
+Finished building: Lab0_blinky_ff.list
+ 
+19:09:56 **** Build of configuration Debug for project Lab1_Tarning ****
+make -j8 all 
+arm-none-eabi-size  Lab1_Tarning.elf 
+   text	   data	    bss	    dec	    hex	filename
+   8632	     12	   1644	  10288	   2830	Lab1_Tarning.elf
+Finished building: default.size.stdout
+ 
+19:09:56 **** Incremental Build of configuration Debug for project Lab2_trafikljus ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'set_traffic_lights':
+../Core/Src/main.c:75:17: warning: enumeration value 's_car_stopping' not handled in switch [-Wswitch]
+   75 |                 switch(s) {
+      |                 ^~~~~~
+../Core/Src/main.c:75:17: warning: enumeration value 's_passenger_go' not handled in switch [-Wswitch]
+../Core/Src/main.c: At top level:
+../Core/Src/main.c:114:1: error: expected identifier or '(' before '}' token
+  114 | }
+      | ^
+make: *** [Core/Src/subdir.mk:34: Core/Src/main.o] Error 1
+"make -j8 all" terminated with exit code 2. Build might be incomplete.

@@ -72,43 +72,18 @@ static void MX_USART2_UART_Init(void);
 
 void set_traffic_lights(enum state s){
 
-		switch(s) {
+	while (1){
 
-		case s_init:
-			//Car Lights on
-			HAL_GPIO_WritePin(CAR_A_GPIO_Port, CAR_A_Pin, GPIO_PIN_SET);
-			HAL_GPIO_WritePin(CAR_B_GPIO_Port, CAR_B_Pin, GPIO_PIN_SET);
-			HAL_GPIO_WritePin(CAR_C_GPIO_Port, CAR_C_Pin, GPIO_PIN_SET);
+		event = read_event();
+		if(state == s_init){
 
-			//Passer Lights on
-			HAL_GPIO_WritePin(P_D_GPIO_Port, P_D_Pin, GPIO_PIN_SET);
-			HAL_GPIO_WritePin(P_E_GPIO_Port, P_E_Pin, GPIO_PIN_SET);
-		break;
+			HAL_GPIO_WritePin(CAR_A , GPIO_Pin, PinState)
 
-		case s_car_go:
-			//Car Green
-			HAL_GPIO_WritePin(CAR_C_GPIO_Port, CAR_C_Pin, GPIO_PIN_SET);
-			//Passer Red
-			HAL_GPIO_WritePin(P_D_GPIO_Port, P_D_Pin, GPIO_PIN_SET);
 
-			//Rest off
-			HAL_GPIO_WritePin(CAR_A_GPIO_Port, CAR_A_Pin, GPIO_PIN_RESET);
-			HAL_GPIO_WritePin(CAR_B_GPIO_Port, CAR_B_Pin, GPIO_PIN_RESET);
-			HAL_GPIO_WritePin(P_E_GPIO_Port, P_E_Pin, GPIO_PIN_RESET);
-		break;
-
-		case s_car_wait:
-
-			//Car Yellow
-			HAL_GPIO_WritePin(CAR_B_GPIO_Port, CAR_B_Pin, GPIO_PIN_SET);
-			//Passer Red
-			HAL_GPIO_WritePin(P_D_GPIO_Port, P_D_Pin, GPIO_PIN_SET);
-
-			//Rest off
-			HAL_GPIO_WritePin(CAR_A_GPIO_Port, CAR_A_Pin, GPIO_PIN_RESET);
-			HAL_GPIO_WritePin(CAR_C_GPIO_Port, CAR_C_Pin, GPIO_PIN_RESET);
 
 		}
+
+
 
 	}
 }

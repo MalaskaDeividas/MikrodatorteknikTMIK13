@@ -11720,3 +11720,21 @@ java.lang.IllegalArgumentException: Maximum limit of resources to transfer is: 1
 
 !ENTRY com.st.stm32cube.ide.mcu.debug.launch 2 0 2024-09-03 18:36:51.526
 !MESSAGE Won't launch debug session since we failed to locate the binary.
+!SESSION 2024-09-03 18:39:06.976 -----------------------------------------------
+eclipse.buildId=Version 1.16.0
+java.version=17.0.11
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Command-line arguments:  -os linux -ws gtk -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2024-09-03 18:39:12.860
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2024-09-03 18:39:12.861
+!MESSAGE Log4j2 initialized with config file /home/deividas/School/Prog/MKLabbar/MikrodatorteknikTMIK13/.metadata/.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2024-09-03 18:39:19.243
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY com.st.stm32cube.ide.mcu.debug.launch 2 0 2024-09-03 18:42:42.837
+!MESSAGE Won't launch debug session since we failed to locate the binary.
