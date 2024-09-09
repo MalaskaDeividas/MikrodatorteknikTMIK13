@@ -99,55 +99,57 @@ void set_traffic_lights(enum state s){
 		case s_R_R:
 
 			//Car Red
-			HAL_GPIO_WritePin(CAR_C_GPIO_Port, CAR_C_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(CAR_A_GPIO_Port, CAR_A_Pin, GPIO_PIN_SET);
 			//Passer Red
 			HAL_GPIO_WritePin(P_E_GPIO_Port, P_E_Pin, GPIO_PIN_SET);
 
 			//Rest reset (turn off)
 			HAL_GPIO_WritePin(CAR_B_GPIO_Port, CAR_B_Pin, GPIO_PIN_RESET);
-			HAL_GPIO_WritePin(CAR_A_GPIO_Port, CAR_A_Pin, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(CAR_C_GPIO_Port, CAR_C_Pin, GPIO_PIN_RESET);
 			HAL_GPIO_WritePin(P_D_GPIO_Port, P_D_Pin, GPIO_PIN_RESET);
 
 		break;
 
 		case s_R_G:
 				// Car red, passer green
-		        HAL_GPIO_WritePin(CAR_C_GPIO_Port, CAR_C_Pin, GPIO_PIN_SET);
-		        HAL_GPIO_WritePin(P_D_GPIO_Port, P_D_Pin, GPIO_PIN_SET);
+		        HAL_GPIO_WritePin(CAR_A_GPIO_Port, CAR_A_Pin, GPIO_PIN_SET);
+		        HAL_GPIO_WritePin(P_E_GPIO_Port, P_E_Pin, GPIO_PIN_SET);
 
 		        //Reset rest
 		        HAL_GPIO_WritePin(CAR_B_GPIO_Port, CAR_B_Pin, GPIO_PIN_RESET);
-		        HAL_GPIO_WritePin(CAR_A_GPIO_Port, CAR_A_Pin, GPIO_PIN_RESET);
-		        HAL_GPIO_WritePin(P_E_GPIO_Port, P_E_Pin, GPIO_PIN_RESET);
+		        HAL_GPIO_WritePin(CAR_C_GPIO_Port, CAR_C_Pin, GPIO_PIN_RESET);
+		        HAL_GPIO_WritePin(P_D_GPIO_Port, P_D_Pin, GPIO_PIN_RESET);
 		        break;
 
 		    case s_RY_R:
 		    	//Car red and yellow, passer red
-		        HAL_GPIO_WritePin(CAR_C_GPIO_Port, CAR_C_Pin, GPIO_PIN_SET);
+		        HAL_GPIO_WritePin(CAR_A_GPIO_Port, CAR_A_Pin, GPIO_PIN_SET);
 		        HAL_GPIO_WritePin(CAR_B_GPIO_Port, CAR_B_Pin, GPIO_PIN_SET);
-		        HAL_GPIO_WritePin(P_E_GPIO_Port, P_E_Pin, GPIO_PIN_SET);
+		        HAL_GPIO_WritePin(P_D_GPIO_Port, P_D_Pin, GPIO_PIN_SET);
 		        //Reset rest
-		        HAL_GPIO_WritePin(CAR_A_GPIO_Port, CAR_A_Pin, GPIO_PIN_RESET);
-		        HAL_GPIO_WritePin(P_D_GPIO_Port, P_D_Pin, GPIO_PIN_RESET);
+		        HAL_GPIO_WritePin(CAR_C_GPIO_Port, CAR_C_Pin, GPIO_PIN_RESET);
+		        HAL_GPIO_WritePin(P_E_GPIO_Port, P_E_Pin, GPIO_PIN_RESET);
 		        break;
 
 		    case s_G_R:
-		        HAL_GPIO_WritePin(CAR_A_GPIO_Port, CAR_A_Pin, GPIO_PIN_SET);
-		        HAL_GPIO_WritePin(P_E_GPIO_Port, P_E_Pin, GPIO_PIN_SET);
-		        // Reset rest
-		        HAL_GPIO_WritePin(CAR_B_GPIO_Port, CAR_B_Pin, GPIO_PIN_RESET);
-		        HAL_GPIO_WritePin(CAR_C_GPIO_Port, CAR_C_Pin, GPIO_PIN_RESET);
-		        HAL_GPIO_WritePin(P_D_GPIO_Port, P_D_Pin, GPIO_PIN_RESET);
-		        break;
-		    case s_Y_R:
-		        HAL_GPIO_WritePin(CAR_B_GPIO_Port, CAR_B_Pin, GPIO_PIN_SET);
-		        HAL_GPIO_WritePin(P_E_GPIO_Port, P_E_Pin, GPIO_PIN_SET);
+		    	//Car green, passer red
+		        HAL_GPIO_WritePin(CAR_C_GPIO_Port, CAR_C_Pin, GPIO_PIN_SET);
+		        HAL_GPIO_WritePin(P_D_GPIO_Port, P_D_Pin, GPIO_PIN_SET);
 		        // Reset rest
 		        HAL_GPIO_WritePin(CAR_A_GPIO_Port, CAR_A_Pin, GPIO_PIN_RESET);
-		        HAL_GPIO_WritePin(CAR_C_GPIO_Port, CAR_C_Pin, GPIO_PIN_RESET);
-		        HAL_GPIO_WritePin(P_D_GPIO_Port, P_D_Pin, GPIO_PIN_RESET);
+		        HAL_GPIO_WritePin(CAR_B_GPIO_Port, CAR_B_Pin, GPIO_PIN_RESET);
+		        HAL_GPIO_WritePin(P_E_GPIO_Port, P_E_Pin, GPIO_PIN_RESET);
 		        break;
 
+		    case s_Y_R:
+		    	//Car yellow, Passer Red
+		        HAL_GPIO_WritePin(CAR_B_GPIO_Port, CAR_B_Pin, GPIO_PIN_SET);
+		        HAL_GPIO_WritePin(P_D_GPIO_Port, P_D_Pin, GPIO_PIN_SET);
+		        //Reset rest
+		        HAL_GPIO_WritePin(CAR_A_GPIO_Port, CAR_A_Pin, GPIO_PIN_RESET);
+		        HAL_GPIO_WritePin(CAR_C_GPIO_Port, CAR_C_Pin, GPIO_PIN_RESET);
+		        HAL_GPIO_WritePin(P_E_GPIO_Port, P_E_Pin, GPIO_PIN_RESET);
+		        break;
 		    default:
 		    	//All turned off
 		    	HAL_GPIO_WritePin(CAR_A_GPIO_Port, CAR_A_Pin, GPIO_PIN_RESET);
@@ -260,11 +262,10 @@ uint32_t  last_tick = 0;
 
 		if (ticks_left_in_state > 0) {
 			ticks_left_in_state--;
-			if (ticks_left_in_state == 0){
-				ev = ev_state_timeout;
-			}//end if 3
 		}//end if 2
-
+		if (ticks_left_in_state == 0){
+			ev = ev_state_timeout;
+		}//end if 3
 		last_tick = curr_tick;
 
 	  }//end if 1
@@ -287,10 +288,6 @@ uint32_t  last_tick = 0;
 			  st_sw = s_3;
 			  ticks_left_in_state = 1000;
 			  set_traffic_lights(s_R_R);
-		  }
-		  else if (ev == ev_button_push){
-			  st_sw = s_3;
-
 		  }
 
 		  break;

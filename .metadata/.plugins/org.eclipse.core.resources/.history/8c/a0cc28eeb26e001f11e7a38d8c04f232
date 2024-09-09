@@ -260,11 +260,10 @@ uint32_t  last_tick = 0;
 
 		if (ticks_left_in_state > 0) {
 			ticks_left_in_state--;
-			if (ticks_left_in_state == 0){
-				ev = ev_state_timeout;
-			}//end if 3
 		}//end if 2
-
+		if (ticks_left_in_state == 0){
+			ev = ev_state_timeout;
+		}//end if 3
 		last_tick = curr_tick;
 
 	  }//end if 1
