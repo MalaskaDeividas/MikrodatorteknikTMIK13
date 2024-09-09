@@ -71,7 +71,6 @@ static void MX_USART2_UART_Init(void);
 		s_5,
 		s_6,
 		s_7,
-		s_8,
 		s_R_R,
 		s_R_G,
 		s_RY_R,
@@ -228,9 +227,9 @@ enum state st_sw 	= s_1;
 int curr_press		= 0;
 int last_press		= 0;
 
-uint32_t  ticks_left_in_state = 0;
-uint32_t  curr_tick = 0;
-uint32_t  last_tick = 0;
+unit32_t ticks_left_in_state = 0;
+uint32_t curr_tick = 0;
+unit32_t last_tick = 0;
 
 
 
@@ -240,7 +239,6 @@ uint32_t  last_tick = 0;
   {
 
 
-	  //dubbel sync
 	  curr_press = is_button_pressed();
 
 	  if (curr_press && !last_press) {
@@ -255,7 +253,7 @@ uint32_t  last_tick = 0;
 		if (ticks_left_in_state > 0) {
 			ticks_left_in_state--;
 		}//end if 2
-		if (ticks_left_in_state == 0){
+		if (ticks_left_in_state == 0 && ){
 			ev = ev_state_timeout;
 		}//end if 3
 		last_tick = curr_tick;
@@ -268,100 +266,37 @@ uint32_t  last_tick = 0;
 
 
 		  if (ev = ev_none) {
+			  st_lg = s_R_R;
 			  st_sw = s_2;
 			  ticks_left_in_state = 3000;
-			  set_traffic_lights(s_init);
+			  set_traffic_lights(st_lg); //den kmr köra R_R nu
 		  }
 
 		  break;
 
 	  case s_2:
 		  if (ev = ev_state_timeout) {
+			  st_lg = s_G_R;
 			  st_sw = s_3;
 			  ticks_left_in_state = 3000;
-			  set_traffic_lights(s_R_R);
+			  set_traffic_lights(st_lg); //s_G_R
 		  }
 
 		  break;
 
 	  case s_3:
 		  if (ev = ev_button_push) {
+			  st_lg = s_Y_R;
 			  st_sw = s_4;
 			  ticks_left_in_state = 3000;
-			  set_traffic_lights(s_G_R);
-		  }
-		  else
+			  set_traffic_lights(st_lg);
+		  }else
 		  {
-			  ev = ev_state_timeout;
 			  st_sw = s_2;
 		  }
-		  break;
 
-	  case s_4:
-		  if (ev = ev_state_timeout) {
-			  st_sw = s_5;
-			  ticks_left_in_state = 3000;
-			  set_traffic_lights(s_Y_R);
-		  }
-		  else
-		  {
-			st_sw = s_3;
-			ev = ev_state_timeout;
-		  }
-		  break;
 
-	  case s_5:
-		  if (ev = ev_state_timeout) {
-			  st_sw = s_6;
-			  ticks_left_in_state = 3000;
-			  set_traffic_lights(s_R_R);
-		  	}
-		  	else
-		  	{
-		  	  st_sw = s_3;
-		  	  ev = ev_state_timeout;
-		  	}
-		  	break;
-	  case s_6:
-		  if (ev = ev_state_timeout) {
-			  st_sw = s_7;
-			  ticks_left_in_state = 3000;
-			  set_traffic_lights(s_R_G);
-		  	}
-		  	else
-		  	{
-		  	  st_sw = s_3;
-		  	  ev = ev_state_timeout;
-		  	}
-		  	break;
-	  case s_7:
-		  if (ev = ev_state_timeout) {
-			  st_sw = s_8;
-			  ticks_left_in_state = 3000;
-			  set_traffic_lights(s_R_R);
-		  	}
-		  	else
-		  	{
-		  	  st_sw = s_3;
-		  	  ev = ev_state_timeout;
-		  	}
-		  	break;
-	  case s_8:
-		  if (ev = ev_state_timeout) {
-			  st_sw = s_3;
-			  ticks_left_in_state = 3000;
-			  set_traffic_lights(s_RY_R);
-		  	}
-		  	else
-		  	{
-		  	  st_sw = s_3;
-		  	  ev = ev_state_timeout;
-		  	}
-		  	break;
-	  default:
-		  st_sw = s_1;
-		  ev = ev_none;
-		  break;
+
 
 
 
