@@ -57,13 +57,20 @@ static void MX_USART2_UART_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 	enum event {
-		ev_none = 0,
-		ev_button_push = 1,
+		ev_none,
+		ev_button_push,
 		ev_state_timeout
 	};
 
 	enum state {
 		s_init,
+		s_1,
+		s_2,
+		s_3,
+		s_4,
+		s_5,
+		s_6,
+		s_7,
 		s_R_R,
 		s_R_G,
 		s_RY_R,
@@ -76,6 +83,7 @@ void set_traffic_lights(enum state s){
 		switch(s) {
 
 		case s_init:
+
 			//Car Lights on
 			HAL_GPIO_WritePin(CAR_A_GPIO_Port, CAR_A_Pin, GPIO_PIN_SET); //Red
 			HAL_GPIO_WritePin(CAR_B_GPIO_Port, CAR_B_Pin, GPIO_PIN_SET); //Yellow
@@ -84,61 +92,95 @@ void set_traffic_lights(enum state s){
 			//Passer Lights on
 			HAL_GPIO_WritePin(P_D_GPIO_Port, P_D_Pin, GPIO_PIN_SET); //Green
 			HAL_GPIO_WritePin(P_E_GPIO_Port, P_E_Pin, GPIO_PIN_SET); //Red
+
 		break;
 
 		case s_R_R:
+
 			//Car Red
 			HAL_GPIO_WritePin(CAR_A_GPIO_Port, CAR_A_Pin, GPIO_PIN_SET);
 			//Passer Red
 			HAL_GPIO_WritePin(P_E_GPIO_Port, P_E_Pin, GPIO_PIN_SET);
 
-			//Rest off
+			//Rest reset (turn off)
 			HAL_GPIO_WritePin(CAR_B_GPIO_Port, CAR_B_Pin, GPIO_PIN_RESET);
 			HAL_GPIO_WritePin(CAR_C_GPIO_Port, CAR_C_Pin, GPIO_PIN_RESET);
 			HAL_GPIO_WritePin(P_D_GPIO_Port, P_D_Pin, GPIO_PIN_RESET);
+
 		break;
 
 		case s_R_G:
+				// Car red, passer green
 		        HAL_GPIO_WritePin(CAR_A_GPIO_Port, CAR_A_Pin, GPIO_PIN_SET);
-		        HAL_GPIO_WritePin(CAR_E_GPIO_Port, CAR_E_Pin, GPIO_PIN_SET);
+		        HAL_GPIO_WritePin(P_E_GPIO_Port, P_E_Pin, GPIO_PIN_SET);
+
 		        //Reset rest
 		        HAL_GPIO_WritePin(CAR_B_GPIO_Port, CAR_B_Pin, GPIO_PIN_RESET);
 		        HAL_GPIO_WritePin(CAR_C_GPIO_Port, CAR_C_Pin, GPIO_PIN_RESET);
-		        HAL_GPIO_WritePin(CAR_D_GPIO_Port, CAR_D_Pin, GPIO_PIN_RESET);
+		        HAL_GPIO_WritePin(P_D_GPIO_Port, P_D_Pin, GPIO_PIN_RESET);
 		        break;
+
 		    case s_RY_R:
+		    	//Car red and yellow, passer red
 		        HAL_GPIO_WritePin(CAR_A_GPIO_Port, CAR_A_Pin, GPIO_PIN_SET);
 		        HAL_GPIO_WritePin(CAR_B_GPIO_Port, CAR_B_Pin, GPIO_PIN_SET);
-		        HAL_GPIO_WritePin(CAR_D_GPIO_Port, CAR_D_Pin, GPIO_PIN_SET);
+		        HAL_GPIO_WritePin(P_D_GPIO_Port, P_D_Pin, GPIO_PIN_SET);
 		        //Reset rest
 		        HAL_GPIO_WritePin(CAR_C_GPIO_Port, CAR_C_Pin, GPIO_PIN_RESET);
-		        HAL_GPIO_WritePin(CAR_E_GPIO_Port, CAR_E_Pin, GPIO_PIN_RESET);
+		        HAL_GPIO_WritePin(P_E_GPIO_Port, P_E_Pin, GPIO_PIN_RESET);
 		        break;
+
 		    case s_G_R:
+		    	//Car green, passer red
 		        HAL_GPIO_WritePin(CAR_C_GPIO_Port, CAR_C_Pin, GPIO_PIN_SET);
-		        HAL_GPIO_WritePin(CAR_D_GPIO_Port, CAR_D_Pin, GPIO_PIN_SET);
+		        HAL_GPIO_WritePin(P_D_GPIO_Port, P_D_Pin, GPIO_PIN_SET);
 		        // Reset rest
 		        HAL_GPIO_WritePin(CAR_A_GPIO_Port, CAR_A_Pin, GPIO_PIN_RESET);
 		        HAL_GPIO_WritePin(CAR_B_GPIO_Port, CAR_B_Pin, GPIO_PIN_RESET);
-		        HAL_GPIO_WritePin(CAR_E_GPIO_Port, CAR_E_Pin, GPIO_PIN_RESET);
+		        HAL_GPIO_WritePin(P_E_GPIO_Port, P_E_Pin, GPIO_PIN_RESET);
 		        break;
+
 		    case s_Y_R:
+		    	//Car yellow, Passer Red
 		        HAL_GPIO_WritePin(CAR_B_GPIO_Port, CAR_B_Pin, GPIO_PIN_SET);
-		        HAL_GPIO_WritePin(CAR_D_GPIO_Port, CAR_D_Pin, GPIO_PIN_SET);
-		        // Reset rest
+		        HAL_GPIO_WritePin(P_D_GPIO_Port, P_D_Pin, GPIO_PIN_SET);
+		        //Reset rest
 		        HAL_GPIO_WritePin(CAR_A_GPIO_Port, CAR_A_Pin, GPIO_PIN_RESET);
 		        HAL_GPIO_WritePin(CAR_C_GPIO_Port, CAR_C_Pin, GPIO_PIN_RESET);
-		        HAL_GPIO_WritePin(CAR_E_GPIO_Port, CAR_E_Pin, GPIO_PIN_RESET);
+		        HAL_GPIO_WritePin(P_E_GPIO_Port, P_E_Pin, GPIO_PIN_RESET);
 		        break;
 		    default:
-
+		    	//All turned off
+		    	HAL_GPIO_WritePin(CAR_A_GPIO_Port, CAR_A_Pin, GPIO_PIN_RESET);
+				HAL_GPIO_WritePin(CAR_B_GPIO_Port, CAR_B_Pin, GPIO_PIN_RESET);
+				HAL_GPIO_WritePin(CAR_C_GPIO_Port, CAR_C_Pin, GPIO_PIN_RESET);
+				HAL_GPIO_WritePin(P_D_GPIO_Port, P_D_Pin, GPIO_PIN_RESET);
+				HAL_GPIO_WritePin(P_E_GPIO_Port, P_E_Pin, GPIO_PIN_RESET);
 		    }
 
 		}
 
-	}
+void push_button_light_on(void){
+
+	if(HAL_GPIO_ReadPin(B1_GPIO_Port, B1_Pin) == 0) {
+		HAL_GPIO_WritePin(B1_Lg_GPIO_Port, B1_Lg_Pin, GPIO_PIN_SET);
+	};
+
 }
 
+void push_button_light_off(void){
+
+	if(HAL_GPIO_ReadPin(B1_GPIO_Port, B1_Pin) == 1) {
+		HAL_GPIO_WritePin(B1_Lg_GPIO_Port, B1_Lg_Pin, GPIO_PIN_RESET);
+	};
+}
+
+int is_blue_button_pressed(void){
+	if(HAL_GPIO_ReadPin(B1_GPIO_Port, B1_Pin) == 0) {
+		return 1;
+	}
+	return 0;
+}
 
 
 /* USER CODE END 0 */
@@ -179,12 +221,106 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+enum state st_lg	= s_init;
+enum event ev 		= ev_none;
+enum state st_sw 	= s_1;
+int curr_press		= 0;
+int last_press		= 0;
+
+unit32_t ticks_left_in_state = 0;
+uint32_t curr_tick = 0;
+unit32_t last_tick = 0;
+
+
+
+
+
   while (1)
   {
+
+
+	  curr_press = is_button_pressed();
+
+	  if (curr_press && !last_press) {
+		  ev = ev_button_push;
+	  }
+	  last_press = curr_press;
+
+	  //Tick handler
+	  curr_tick = HAL_GetTick();
+	  if (curr_tick != last_tick) {
+
+		if (ticks_left_in_state > 0) {
+			ticks_left_in_state--;
+		}//end if 2
+		if (ticks_left_in_state == 0 && ){
+			ev = ev_state_timeout;
+		}//end if 3
+		last_tick = curr_tick;
+
+	  }//end if 1
+
+	  switch(st_sw){
+
+	  case s_1:
+
+
+		  if (ev = ev_none) {
+			  st_lg = s_R_R;
+			  st_sw = s_2;
+			  ticks_left_in_state = 3000;
+			  set_traffic_lights(st_lg); //den kmr köra R_R nu
+		  }
+
+		  break;
+
+	  case s_2:
+		  if (ev = ev_state_timeout) {
+			  st_lg = s_G_R;
+			  st_sw = s_3;
+			  ticks_left_in_state = 3000;
+			  set_traffic_lights(st_lg); //s_G_R
+		  }
+
+		  break;
+
+	  case s_3:
+		  if (ev = ev_button_push) {
+			  st_lg = s_Y_R;
+			  st_sw = s_4;
+			  ticks_left_in_state = 3000;
+			  set_traffic_lights(st_lg);
+		  }else
+		  {
+			  st_sw = s_2;
+		  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-  }
+
   /* USER CODE END 3 */
 }
 
@@ -285,7 +421,7 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, CAR_A_Pin|CAR_B_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOC, CAR_A_Pin|CAR_B_Pin|B1_Lg_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, P_E_Pin|P_D_Pin|LD2_Pin, GPIO_PIN_RESET);
@@ -299,8 +435,8 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(B1_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : CAR_A_Pin CAR_B_Pin */
-  GPIO_InitStruct.Pin = CAR_A_Pin|CAR_B_Pin;
+  /*Configure GPIO pins : CAR_A_Pin CAR_B_Pin B1_Lg_Pin */
+  GPIO_InitStruct.Pin = CAR_A_Pin|CAR_B_Pin|B1_Lg_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;

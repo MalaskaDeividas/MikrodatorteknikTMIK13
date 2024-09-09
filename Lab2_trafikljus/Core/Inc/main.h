@@ -63,6 +63,8 @@ void Error_Handler(void);
 #define CAR_A_GPIO_Port GPIOC
 #define CAR_B_Pin GPIO_PIN_1
 #define CAR_B_GPIO_Port GPIOC
+#define B1_Lg_Pin GPIO_PIN_2
+#define B1_Lg_GPIO_Port GPIOC
 #define P_E_Pin GPIO_PIN_1
 #define P_E_GPIO_Port GPIOA
 #define USART_TX_Pin GPIO_PIN_2

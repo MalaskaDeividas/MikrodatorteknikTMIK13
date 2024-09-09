@@ -1,29 +1,10 @@
-19:09:55 **** Build of configuration Debug for project Lab0_blinky_ff ****
+17:49:10 **** Build of configuration Debug for project Lab0_blinky_ff ****
 make -j8 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'main':
-../Core/Src/main.c:108:21: warning: implicit declaration of function 'sprintf' [-Wimplicit-function-declaration]
-  108 |           str_len = sprintf(str, "Blinky has succeeded %d times!\r\n", nblink);
-      |                     ^~~~~~~
-../Core/Src/main.c:21:1: note: include '<stdio.h>' or provide a declaration of 'sprintf'
-   20 | #include "main.h"
-  +++ |+#include <stdio.h>
-   21 | 
-../Core/Src/main.c:108:21: warning: incompatible implicit declaration of built-in function 'sprintf' [-Wbuiltin-declaration-mismatch]
-  108 |           str_len = sprintf(str, "Blinky has succeeded %d times!\r\n", nblink);
-      |                     ^~~~~~~
-../Core/Src/main.c:108:21: note: include '<stdio.h>' or provide a declaration of 'sprintf'
-arm-none-eabi-gcc -o "Lab0_blinky_ff.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/deividas/School/Prog/MKLabbar/MikrodatorteknikTMIK13/Lab0_blinky_ff/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Lab0_blinky_ff.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: Lab0_blinky_ff.elf
- 
 arm-none-eabi-size  Lab0_blinky_ff.elf 
-arm-none-eabi-objdump -h -S Lab0_blinky_ff.elf  > "Lab0_blinky_ff.list"
    text	   data	    bss	    dec	    hex	filename
   11132	     92	   1972	  13196	   338c	Lab0_blinky_ff.elf
 Finished building: default.size.stdout
  
-Finished building: Lab0_blinky_ff.list
- 
 
-19:09:55 Build Finished. 0 errors, 2 warnings. (took 567ms)
+17:49:11 Build Finished. 0 errors, 0 warnings. (took 159ms)
 

@@ -1,17 +1,66 @@
-19:09:56 **** Incremental Build of configuration Debug for project Lab2_trafikljus ****
+17:49:11 **** Incremental Build of configuration Debug for project Lab2_trafikljus ****
 make -j8 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'set_traffic_lights':
-../Core/Src/main.c:75:17: warning: enumeration value 's_car_stopping' not handled in switch [-Wswitch]
-   75 |                 switch(s) {
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:223:16: error: 'st' undeclared (first use in this function)
+  223 |         switch(st)
+      |                ^~
+../Core/Src/main.c:223:16: note: each undeclared identifier is reported only once for each function it appears in
+../Core/Src/main.c:226:14: error: 's_1' undeclared (first use in this function); did you mean 's_7'?
+  226 |         case s_1:
+      |              ^~~
+      |              s_7
+../Core/Src/main.c:228:36: error: 'st_init' undeclared (first use in this function); did you mean 's_init'?
+  228 |                 set_traffic_lights(st_init);
+      |                                    ^~~~~~~
+      |                                    s_init
+../Core/Src/main.c:233:17: error: 'time_to_switch' undeclared (first use in this function)
+  233 |                 time_to_switch = 2000;
+      |                 ^~~~~~~~~~~~~~
+../Core/Src/main.c:238:17: error: 'st_G_R' undeclared (first use in this function); did you mean 's_G_R'?
+  238 |                 st_G_R  = s
       |                 ^~~~~~
-../Core/Src/main.c:75:17: warning: enumeration value 's_passenger_go' not handled in switch [-Wswitch]
+      |                 s_G_R
+../Core/Src/main.c:238:27: error: 's' undeclared (first use in this function)
+  238 |                 st_G_R  = s
+      |                           ^
+../Core/Src/main.c:238:28: error: expected ';' before 'break'
+  238 |                 st_G_R  = s
+      |                            ^
+      |                            ;
+......
+  241 |                 break;
+      |                 ~~~~~       
+../Core/Src/main.c:267:22: error: 'current_t' undeclared (first use in this function)
+  267 |                   if(current_t != two_t){
+      |                      ^~~~~~~~~
+../Core/Src/main.c:267:35: error: 'two_t' undeclared (first use in this function)
+  267 |                   if(current_t != two_t){
+      |                                   ^~~~~
+../Core/Src/main.c:276:33: warning: 'return' with no value, in function returning non-void [-Wreturn-type]
+  276 |                                 return;
+      |                                 ^~~~~~
+../Core/Src/main.c:184:5: note: declared here
+  184 | int main(void)
+      |     ^~~~
+../Core/Src/main.c:284:35: error: 'three_t' undeclared (first use in this function)
+  284 |                   if(current_t != three_t){
+      |                                   ^~~~~~~
+../Core/Src/main.c:285:27: error: 'current' undeclared (first use in this function)
+  285 |                           current -= 1;
+      |                           ^~~~~~~
+../Core/Src/main.c:263:11: warning: enumeration value 'ev_state_timeout' not handled in switch [-Wswitch]
+  263 |           switch(ev){
+      |           ^~~~~~
+../Core/Src/main.c:218:12: warning: variable 'st_sw' set but not used [-Wunused-but-set-variable]
+  218 | enum state st_sw        = s_init;
+      |            ^~~~~
 ../Core/Src/main.c: At top level:
-../Core/Src/main.c:114:1: error: expected identifier or '(' before '}' token
-  114 | }
+../Core/Src/main.c:307:1: error: expected identifier or '(' before '}' token
+  307 | }
       | ^
 make: *** [Core/Src/subdir.mk:34: Core/Src/main.o] Error 1
 "make -j8 all" terminated with exit code 2. Build might be incomplete.
 
-19:09:56 Build Failed. 2 errors, 2 warnings. (took 322ms)
+17:49:11 Build Failed. 13 errors, 3 warnings. (took 212ms)
 
