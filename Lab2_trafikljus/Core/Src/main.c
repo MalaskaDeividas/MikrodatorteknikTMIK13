@@ -71,6 +71,7 @@ static void MX_USART2_UART_Init(void);
 		s_5,
 		s_6,
 		s_7,
+		s_8,
 		s_R_R,
 		s_R_G,
 		s_RY_R,
@@ -98,57 +99,55 @@ void set_traffic_lights(enum state s){
 		case s_R_R:
 
 			//Car Red
-			HAL_GPIO_WritePin(CAR_A_GPIO_Port, CAR_A_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(CAR_C_GPIO_Port, CAR_C_Pin, GPIO_PIN_SET);
 			//Passer Red
 			HAL_GPIO_WritePin(P_E_GPIO_Port, P_E_Pin, GPIO_PIN_SET);
 
 			//Rest reset (turn off)
 			HAL_GPIO_WritePin(CAR_B_GPIO_Port, CAR_B_Pin, GPIO_PIN_RESET);
-			HAL_GPIO_WritePin(CAR_C_GPIO_Port, CAR_C_Pin, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(CAR_A_GPIO_Port, CAR_A_Pin, GPIO_PIN_RESET);
 			HAL_GPIO_WritePin(P_D_GPIO_Port, P_D_Pin, GPIO_PIN_RESET);
 
 		break;
 
 		case s_R_G:
 				// Car red, passer green
-		        HAL_GPIO_WritePin(CAR_A_GPIO_Port, CAR_A_Pin, GPIO_PIN_SET);
-		        HAL_GPIO_WritePin(P_E_GPIO_Port, P_E_Pin, GPIO_PIN_SET);
+		        HAL_GPIO_WritePin(CAR_C_GPIO_Port, CAR_C_Pin, GPIO_PIN_SET);
+		        HAL_GPIO_WritePin(P_D_GPIO_Port, P_D_Pin, GPIO_PIN_SET);
 
 		        //Reset rest
 		        HAL_GPIO_WritePin(CAR_B_GPIO_Port, CAR_B_Pin, GPIO_PIN_RESET);
-		        HAL_GPIO_WritePin(CAR_C_GPIO_Port, CAR_C_Pin, GPIO_PIN_RESET);
-		        HAL_GPIO_WritePin(P_D_GPIO_Port, P_D_Pin, GPIO_PIN_RESET);
+		        HAL_GPIO_WritePin(CAR_A_GPIO_Port, CAR_A_Pin, GPIO_PIN_RESET);
+		        HAL_GPIO_WritePin(P_E_GPIO_Port, P_E_Pin, GPIO_PIN_RESET);
 		        break;
 
 		    case s_RY_R:
 		    	//Car red and yellow, passer red
-		        HAL_GPIO_WritePin(CAR_A_GPIO_Port, CAR_A_Pin, GPIO_PIN_SET);
+		        HAL_GPIO_WritePin(CAR_C_GPIO_Port, CAR_C_Pin, GPIO_PIN_SET);
 		        HAL_GPIO_WritePin(CAR_B_GPIO_Port, CAR_B_Pin, GPIO_PIN_SET);
-		        HAL_GPIO_WritePin(P_D_GPIO_Port, P_D_Pin, GPIO_PIN_SET);
+		        HAL_GPIO_WritePin(P_E_GPIO_Port, P_E_Pin, GPIO_PIN_SET);
 		        //Reset rest
-		        HAL_GPIO_WritePin(CAR_C_GPIO_Port, CAR_C_Pin, GPIO_PIN_RESET);
-		        HAL_GPIO_WritePin(P_E_GPIO_Port, P_E_Pin, GPIO_PIN_RESET);
+		        HAL_GPIO_WritePin(CAR_A_GPIO_Port, CAR_A_Pin, GPIO_PIN_RESET);
+		        HAL_GPIO_WritePin(P_D_GPIO_Port, P_D_Pin, GPIO_PIN_RESET);
 		        break;
 
 		    case s_G_R:
-		    	//Car green, passer red
-		        HAL_GPIO_WritePin(CAR_C_GPIO_Port, CAR_C_Pin, GPIO_PIN_SET);
-		        HAL_GPIO_WritePin(P_D_GPIO_Port, P_D_Pin, GPIO_PIN_SET);
+		        HAL_GPIO_WritePin(CAR_A_GPIO_Port, CAR_A_Pin, GPIO_PIN_SET);
+		        HAL_GPIO_WritePin(P_E_GPIO_Port, P_E_Pin, GPIO_PIN_SET);
+		        // Reset rest
+		        HAL_GPIO_WritePin(CAR_B_GPIO_Port, CAR_B_Pin, GPIO_PIN_RESET);
+		        HAL_GPIO_WritePin(CAR_C_GPIO_Port, CAR_C_Pin, GPIO_PIN_RESET);
+		        HAL_GPIO_WritePin(P_D_GPIO_Port, P_D_Pin, GPIO_PIN_RESET);
+		        break;
+		    case s_Y_R:
+		        HAL_GPIO_WritePin(CAR_B_GPIO_Port, CAR_B_Pin, GPIO_PIN_SET);
+		        HAL_GPIO_WritePin(P_E_GPIO_Port, P_E_Pin, GPIO_PIN_SET);
 		        // Reset rest
 		        HAL_GPIO_WritePin(CAR_A_GPIO_Port, CAR_A_Pin, GPIO_PIN_RESET);
-		        HAL_GPIO_WritePin(CAR_B_GPIO_Port, CAR_B_Pin, GPIO_PIN_RESET);
-		        HAL_GPIO_WritePin(P_E_GPIO_Port, P_E_Pin, GPIO_PIN_RESET);
+		        HAL_GPIO_WritePin(CAR_C_GPIO_Port, CAR_C_Pin, GPIO_PIN_RESET);
+		        HAL_GPIO_WritePin(P_D_GPIO_Port, P_D_Pin, GPIO_PIN_RESET);
 		        break;
 
-		    case s_Y_R:
-		    	//Car yellow, Passer Red
-		        HAL_GPIO_WritePin(CAR_B_GPIO_Port, CAR_B_Pin, GPIO_PIN_SET);
-		        HAL_GPIO_WritePin(P_D_GPIO_Port, P_D_Pin, GPIO_PIN_SET);
-		        //Reset rest
-		        HAL_GPIO_WritePin(CAR_A_GPIO_Port, CAR_A_Pin, GPIO_PIN_RESET);
-		        HAL_GPIO_WritePin(CAR_C_GPIO_Port, CAR_C_Pin, GPIO_PIN_RESET);
-		        HAL_GPIO_WritePin(P_E_GPIO_Port, P_E_Pin, GPIO_PIN_RESET);
-		        break;
 		    default:
 		    	//All turned off
 		    	HAL_GPIO_WritePin(CAR_A_GPIO_Port, CAR_A_Pin, GPIO_PIN_RESET);
@@ -175,13 +174,20 @@ void push_button_light_off(void){
 	};
 }
 
-int is_blue_button_pressed(void){
-	if(HAL_GPIO_ReadPin(B1_GPIO_Port, B1_Pin) == 0) {
-		return 1;
-	}
-	return 0;
-}
 
+int is_blue_button_pressed()
+{
+    uint32_t reg_idr     = GPIOC->IDR;
+    uint16_t reg_pin    = (1<<13);
+    if ((reg_idr & reg_pin) == 0)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
 
 /* USER CODE END 0 */
 
@@ -221,25 +227,27 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+
 enum state st_lg	= s_init;
 enum event ev 		= ev_none;
 enum state st_sw 	= s_1;
 int curr_press		= 0;
 int last_press		= 0;
 
-unit32_t ticks_left_in_state = 0;
-uint32_t curr_tick = 0;
-unit32_t last_tick = 0;
+uint32_t  ticks_left_in_state = 0;
+uint32_t  curr_tick = 0;
+uint32_t  last_tick = 0;
 
 
-
+last_tick = HAL_GetTick();
 
 
   while (1)
   {
 
 
-	  curr_press = is_button_pressed();
+	  //dubbel sync
+	  curr_press = is_blue_button_pressed();
 
 	  if (curr_press && !last_press) {
 		  ev = ev_button_push;
@@ -252,10 +260,11 @@ unit32_t last_tick = 0;
 
 		if (ticks_left_in_state > 0) {
 			ticks_left_in_state--;
+			if (ticks_left_in_state == 0){
+				ev = ev_state_timeout;
+			}//end if 3
 		}//end if 2
-		if (ticks_left_in_state == 0 && ){
-			ev = ev_state_timeout;
-		}//end if 3
+
 		last_tick = curr_tick;
 
 	  }//end if 1
@@ -265,36 +274,80 @@ unit32_t last_tick = 0;
 	  case s_1:
 
 
-		  if (ev = ev_none) {
-			  st_lg = s_R_R;
+		  if (ev == ev_none) {
 			  st_sw = s_2;
 			  ticks_left_in_state = 3000;
-			  set_traffic_lights(st_lg); //den kmr köra R_R nu
+			  set_traffic_lights(s_init);
 		  }
 
 		  break;
 
 	  case s_2:
-		  if (ev = ev_state_timeout) {
-			  st_lg = s_G_R;
+		  if (ev == ev_state_timeout) {
 			  st_sw = s_3;
-			  ticks_left_in_state = 3000;
-			  set_traffic_lights(st_lg); //s_G_R
+			  ticks_left_in_state = 1000;
+			  set_traffic_lights(s_R_R);
+		  }
+		  else if (ev == ev_button_push){
+			  st_sw = s_3;
+
 		  }
 
 		  break;
 
 	  case s_3:
-		  if (ev = ev_button_push) {
-			  st_lg = s_Y_R;
+		  if (ev == ev_button_push) {
 			  st_sw = s_4;
 			  ticks_left_in_state = 3000;
-			  set_traffic_lights(st_lg);
-		  }else
-		  {
-			  st_sw = s_2;
+			  set_traffic_lights(s_G_R);
+		  }
+		  break;
+
+	  case s_4:
+		  if (ev == ev_state_timeout) {
+			  st_sw = s_5;
+			  ticks_left_in_state = 3000;
+			  set_traffic_lights(s_Y_R);
 		  }
 
+		  break;
+
+	  case s_5:
+		  if (ev == ev_state_timeout) {
+			  st_sw = s_6;
+			  ticks_left_in_state = 3000;
+			  set_traffic_lights(s_R_R);
+		  	}
+
+		  	break;
+	  case s_6:
+		  if (ev == ev_state_timeout) {
+			  st_sw = s_7;
+			  ticks_left_in_state = 3000;
+			  set_traffic_lights(s_R_G);
+		  	}
+
+		  	break;
+	  case s_7:
+		  if (ev == ev_state_timeout) {
+			  st_sw = s_8;
+			  ticks_left_in_state = 3000;
+			  set_traffic_lights(s_R_R);
+		  	}
+
+		  	break;
+	  case s_8:
+		  if (ev == ev_state_timeout) {
+			  st_sw = s_3;
+			  ticks_left_in_state = 3000;
+			  set_traffic_lights(s_RY_R);
+		  	}
+
+		  	break;
+	  default:
+		  st_sw = s_1;
+		  ev = ev_none;
+		  break;
 
 
 
@@ -313,14 +366,12 @@ unit32_t last_tick = 0;
 
 
 
-
-
-
+	  }
 
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-
+  }
   /* USER CODE END 3 */
 }
 
