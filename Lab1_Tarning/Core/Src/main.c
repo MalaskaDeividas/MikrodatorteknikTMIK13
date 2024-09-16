@@ -129,7 +129,7 @@ int main(void)
   while (1)
   {
 
-	  pressed = is_blue_button_pressed();
+	  //pressed = is_blue_button_pressed();
 	  if (pressed)
 	  {
 		  //HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_SET);

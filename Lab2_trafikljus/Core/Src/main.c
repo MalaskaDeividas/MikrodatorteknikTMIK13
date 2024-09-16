@@ -239,7 +239,7 @@ uint32_t  curr_tick = 0;
 uint32_t  last_tick = 0;
 
 
-
+last_tick = HAL_GetTick();
 
 
   while (1)
@@ -301,11 +301,6 @@ uint32_t  last_tick = 0;
 			  ticks_left_in_state = 3000;
 			  set_traffic_lights(s_G_R);
 		  }
-		  else
-		  {
-			  ev = ev_state_timeout;
-			  st_sw = s_2;
-		  }
 		  break;
 
 	  case s_4:
@@ -314,11 +309,7 @@ uint32_t  last_tick = 0;
 			  ticks_left_in_state = 3000;
 			  set_traffic_lights(s_Y_R);
 		  }
-		  else
-		  {
-			st_sw = s_3;
-			ev = ev_state_timeout;
-		  }
+
 		  break;
 
 	  case s_5:
@@ -327,11 +318,7 @@ uint32_t  last_tick = 0;
 			  ticks_left_in_state = 3000;
 			  set_traffic_lights(s_R_R);
 		  	}
-		  	else
-		  	{
-		  	  st_sw = s_3;
-		  	  ev = ev_state_timeout;
-		  	}
+
 		  	break;
 	  case s_6:
 		  if (ev == ev_state_timeout) {
@@ -339,11 +326,7 @@ uint32_t  last_tick = 0;
 			  ticks_left_in_state = 3000;
 			  set_traffic_lights(s_R_G);
 		  	}
-		  	else
-		  	{
-		  	  st_sw = s_3;
-		  	  ev = ev_state_timeout;
-		  	}
+
 		  	break;
 	  case s_7:
 		  if (ev == ev_state_timeout) {
@@ -351,11 +334,7 @@ uint32_t  last_tick = 0;
 			  ticks_left_in_state = 3000;
 			  set_traffic_lights(s_R_R);
 		  	}
-		  	else
-		  	{
-		  	  st_sw = s_3;
-		  	  ev = ev_state_timeout;
-		  	}
+
 		  	break;
 	  case s_8:
 		  if (ev == ev_state_timeout) {
@@ -363,11 +342,7 @@ uint32_t  last_tick = 0;
 			  ticks_left_in_state = 3000;
 			  set_traffic_lights(s_RY_R);
 		  	}
-		  	else
-		  	{
-		  	  st_sw = s_3;
-		  	  ev = ev_state_timeout;
-		  	}
+
 		  	break;
 	  default:
 		  st_sw = s_1;
