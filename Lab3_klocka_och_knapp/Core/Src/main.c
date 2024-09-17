@@ -51,7 +51,7 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
 void qs_put_big_num(uint16_t num);
-
+void uart_print_menu(string);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -62,7 +62,7 @@ uint16_t button_exti_count;
 uint16_t button_debounced_count;
 uint16_t button_bounce_count;
 int debounce_time_start = 0;
-double BOUNCE_DELAY_NS = 16.0 / 1000000.0;
+int BOUNCE_DELAY_NS = 20;
 int unhandled_exti = 0;
 int button_held = 0;
 
@@ -88,15 +88,17 @@ void button_mode(void){
 				if (my_btn_pressed)
 				{
 					//if button still pressed after debounce, count as valid press
-					button_debounced_count = button_exti_count;
+					button_debounced_count++;
 					button_held = 1;
-					button_bounce_count = button_exti_count; //track bounces during count'
+
 
 				}else if (button_held)
 				{
 					//button was released, show debounce count
 					qs_put_big_num(button_debounced_count);
 					button_held = 0;
+
+					//display blue botton count aka button_exti_count
 				}
 
 				//reset debounce time and clear the flag
@@ -105,10 +107,6 @@ void button_mode(void){
 
 			}
 
-            // If the button is still pressed, count it as a valid press
-            if (my_btn_pressed) {
-                button_debounced_count = button_exti_count; // Register debounced count
-            }
 
             // Clear the unhandled_exti flag
             unhandled_exti = 0;
@@ -126,6 +124,17 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_PIN){
 	}
 }
 
+void uart_print_menu(char* string){
+
+	int num;
+	printf("Choose your density: \n");
+	printf("1. Clock mode. \n");
+	printf("2. Button mode. \n");
+	scanf("%d", num);
+
+
+
+}
 /* USER CODE END 0 */
 
 /**
@@ -166,9 +175,17 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-
-
 	  button_mode();
+
+	  uart_print_menu();
+
+	  for (int i = 0; i < 10; i++)
+	  {
+		  uint32_t dly = 250;
+		  qs_put_big_num(i);			HAL_Delay(dly);
+		  qs_put_digits(i, i, i, i, 0); HAL_Delay(dly);
+		  qs_put_digits(i, i, i, i, 1); HAL_Delay(dly);
+	  }
 
     /* USER CODE END WHILE */
 
@@ -205,6 +222,7 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLQ = 7;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
+
     Error_Handler();
   }
 

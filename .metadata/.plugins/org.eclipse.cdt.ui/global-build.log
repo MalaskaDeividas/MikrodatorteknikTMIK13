@@ -2384,3 +2384,64 @@ arm-none-eabi-size  Lab3_klocka_och_knapp.elf
   10220	     40	   1664	  11924	   2e94	Lab3_klocka_och_knapp.elf
 Finished building: default.size.stdout
  
+16:48:01 **** Incremental Build of configuration Debug for project Lab3_klocka_och_knapp ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:175:19: warning: implicit declaration of function 'qs_put_digits' [-Wimplicit-function-declaration]
+  175 |                   qs_put_digits(i, i, i, i, 0); HAL_Delay(dly);
+      |                   ^~~~~~~~~~~~~
+arm-none-eabi-gcc -o "Lab3_klocka_och_knapp.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/deividas/School/Prog/MKLabbar/MikrodatorteknikTMIK13/Lab3_klocka_och_knapp/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Lab3_klocka_och_knapp.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Lab3_klocka_och_knapp.elf
+ 
+arm-none-eabi-size  Lab3_klocka_och_knapp.elf 
+arm-none-eabi-objdump -h -S Lab3_klocka_och_knapp.elf  > "Lab3_klocka_och_knapp.list"
+   text	   data	    bss	    dec	    hex	filename
+   9200	     36	   1660	  10896	   2a90	Lab3_klocka_och_knapp.elf
+Finished building: default.size.stdout
+ 
+Finished building: Lab3_klocka_och_knapp.list
+ 
+16:48:44 **** Incremental Build of configuration Debug for project Lab3_klocka_och_knapp ****
+make -j8 all 
+arm-none-eabi-size  Lab3_klocka_och_knapp.elf 
+   text	   data	    bss	    dec	    hex	filename
+   9200	     36	   1660	  10896	   2a90	Lab3_klocka_och_knapp.elf
+Finished building: default.size.stdout
+ 
+08:35:23 **** Incremental Build of configuration Debug for project Lab3_klocka_och_knapp ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:54:1: warning: parameter names (without types) in function declaration
+   54 | void uart_print_menu(string);
+      | ^~~~
+../Core/Src/main.c: In function 'uart_print_menu':
+../Core/Src/main.c:127:6: warning: type of 'string' defaults to 'int' [-Wimplicit-int]
+  127 | void uart_print_menu(string){
+      |      ^~~~~~~~~~~~~~~
+../Core/Src/main.c:129:9: warning: implicit declaration of function 'printf' [-Wimplicit-function-declaration]
+  129 |         printf("Choose your density: \n");
+      |         ^~~~~~
+../Core/Src/main.c:21:1: note: include '<stdio.h>' or provide a declaration of 'printf'
+   20 | #include "main.h"
+  +++ |+#include <stdio.h>
+   21 | 
+../Core/Src/main.c:129:9: warning: incompatible implicit declaration of built-in function 'printf' [-Wbuiltin-declaration-mismatch]
+  129 |         printf("Choose your density: \n");
+      |         ^~~~~~
+../Core/Src/main.c:129:9: note: include '<stdio.h>' or provide a declaration of 'printf'
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:180:19: warning: implicit declaration of function 'qs_put_digits' [-Wimplicit-function-declaration]
+  180 |                   qs_put_digits(i, i, i, i, 0); HAL_Delay(dly);
+      |                   ^~~~~~~~~~~~~
+arm-none-eabi-gcc -o "Lab3_klocka_och_knapp.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/deividas/School/Prog/MKLabbar/MikrodatorteknikTMIK13/Lab3_klocka_och_knapp/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Lab3_klocka_och_knapp.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Lab3_klocka_och_knapp.elf
+ 
+arm-none-eabi-size  Lab3_klocka_och_knapp.elf 
+arm-none-eabi-objdump -h -S Lab3_klocka_och_knapp.elf  > "Lab3_klocka_och_knapp.list"
+   text	   data	    bss	    dec	    hex	filename
+  11864	    128	   1992	  13984	   36a0	Lab3_klocka_och_knapp.elf
+Finished building: default.size.stdout
+ 
+Finished building: Lab3_klocka_och_knapp.list
+ 
