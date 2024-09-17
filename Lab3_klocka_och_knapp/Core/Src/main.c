@@ -133,6 +133,9 @@ void uart_print_menu(char* string){
 	scanf("%d", num);
 
 
+	asdasdasfgg
+
+
 
 }
 /* USER CODE END 0 */
