@@ -3,5 +3,3 @@ button_bounce_count
 button_debounced_count
 button_exti_count
 button_held
-BOUNCE_DELAY_NS
-debounce_time_start

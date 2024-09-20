@@ -31,6 +31,7 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+void qs_put_big_num(uint16_t big_num);
 
 /* USER CODE END Includes */
 

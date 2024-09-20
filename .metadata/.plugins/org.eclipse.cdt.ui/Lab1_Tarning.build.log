@@ -1,4 +1,4 @@
-15:50:30 **** Incremental Build of configuration Debug for project Lab1_Tarning ****
+14:28:37 **** Incremental Build of configuration Debug for project Lab1_Tarning ****
 make -j8 all 
 arm-none-eabi-gcc -o "Lab1_Tarning.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/deividas/School/Prog/MKLabbar/MikrodatorteknikTMIK13/Lab1_Tarning/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Lab1_Tarning.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 /home/deividas/Programs/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.linux64_1.0.200.202406132123/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/bin/ld: ./Core/Src/main.o: in function `main':
@@ -7,5 +7,5 @@ collect2: error: ld returned 1 exit status
 make: *** [makefile:64: Lab1_Tarning.elf] Error 1
 "make -j8 all" terminated with exit code 2. Build might be incomplete.
 
-15:50:31 Build Failed. 2 errors, 0 warnings. (took 169ms)
+14:28:37 Build Failed. 2 errors, 0 warnings. (took 223ms)
 
