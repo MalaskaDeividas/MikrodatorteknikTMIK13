@@ -40,6 +40,8 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
+TIM_HandleTypeDef htim2;
+
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
@@ -50,8 +52,7 @@ UART_HandleTypeDef huart2;
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
-void qs_put_big_num(uint16_t num);
-void uart_print_menu(string);
+static void MX_TIM2_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -62,26 +63,25 @@ uint16_t button_exti_count;
 uint16_t button_debounced_count;
 uint16_t button_bounce_count;
 int debounce_time_start = 0;
-int BOUNCE_DELAY_NS = 20;
+int BOUNCE_DELAY_NS = 15;
 int unhandled_exti = 0;
 int button_held = 0;
+uint32_t last_flank_causing_exti = 0;
 
 
-void button_mode(void){
+void button_mode(){
 
 	int my_btn_pressed;
 
-	while(1)
-	{
+	while(1){
+
 		if(unhandled_exti)
 		{
 			//make debounce_time_start = current time
-			if (debounce_time_start == 0){
-				debounce_time_start = HAL_GetTick();
-			}
 
 			//check if debounce time has passed
-			if ((HAL_GetTick() - debounce_time_start) >= BOUNCE_DELAY_NS){
+			if ((HAL_GetTick() - last_flank_causing_exti) >= BOUNCE_DELAY_NS){
+
 				// Read the button state again after the delay
 				my_btn_pressed = GPIO_PIN_RESET == HAL_GPIO_ReadPin(MY_BTN_GPIO_Port, MY_BTN_Pin);
 
@@ -89,28 +89,26 @@ void button_mode(void){
 				{
 					//if button still pressed after debounce, count as valid press
 					button_debounced_count++;
-					button_held = 1;
+					//display
 
-
-				}else if (button_held)
-				{
-					//button was released, show debounce count
-					qs_put_big_num(button_debounced_count);
-					button_held = 0;
-
-					//display blue botton count aka button_exti_count
 				}
-
-				//reset debounce time and clear the flag
-				debounce_time_start = 0;
-				unhandled_exti = 0;
-
+	            unhandled_exti = 0;
 			}
-
-
-            // Clear the unhandled_exti flag
-            unhandled_exti = 0;
 		}
+
+
+
+
+
+	    if (HAL_GPIO_ReadPin(B1_GPIO_Port, B1_Pin) == GPIO_PIN_RESET) {
+	        // Display the debounced count when b1 is pressed
+	        qs_put_big_num(button_exti_count);
+	    }
+		else
+	    {
+	    	qs_put_big_num(button_debounced_count);
+	    }
+
 
 
 	}
@@ -121,23 +119,122 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_PIN){
 	if (GPIO_PIN == MY_BTN_Pin){
 		button_exti_count++;
 		unhandled_exti = 1;
+		last_flank_causing_exti = HAL_GetTick();
+
 	}
 }
 
-void uart_print_menu(char* string){
+void uart_print_menu(){
+	char *menu = "Menu: 1. Clock mode. 2. Button mode.";
+	HAL_UART_Transmit(&huart2, (uint8_t*)menu, strlen(menu), HAL_MAX_DELAY);
+}
 
-	int num;
-	printf("Choose your density: \n");
-	printf("1. Clock mode. \n");
-	printf("2. Button mode. \n");
-	scanf("%d", num);
+int uart_get_menu_choice()
+{
+	char str[1] = {'\0'};
+	uint16_t str_len = 1;
+	HAL_UART_Receive(&huart2,(uint8_t *) str, str_len, HAL_MAX_DELAY);
+	int ret = -1;
+	sscanf(str, "%d", &ret);
+	return ret;
+}
+
+void uart_print_choice(int choice)
+{
+    char message[50];
+
+    switch (choice)
+    {
+        case 1:
+            snprintf(message, sizeof(message), "You picked 1.\n");
+            break;
+        case 2:
+            snprintf(message, sizeof(message), "You picked 2.\n");
+            break;
+        default:
+            snprintf(message, sizeof(message), "Error: Invalid choice, pick 1 or 2.\n");
+            break;
+    }
+
+    HAL_UART_Transmit(&huart2, (uint8_t*)message, strlen(message), HAL_MAX_DELAY);
+}
+uint8_t colon_on = 0;
+uint8_t half_second = 0;
+uint8_t hours = 23;
+uint8_t minutes = 59;
+uint8_t seconds = 0;
+
+void clock_mode()
+{
+    // Start the timer once
+    HAL_TIM_Base_Start_IT(&htim2);
+
+    while (1) {
+        /*** main loop ***/
+
+        // Prepare digit values based on button state
+        uint8_t d0, d1, d2, d3; // d0: thousands, d1: hundreds, d2: tens, d3: units
+        uint8_t colon = colon_on; // Use the colon state from the timer callback
+
+        if (HAL_GPIO_ReadPin(B1_GPIO_Port, B1_Pin) == GPIO_PIN_RESET) {
+            // Show HH:MM
+            d0 = hours / 10;       // Tens of hours
+            d1 = hours % 10;       // Units of hours
+            d2 = minutes / 10;     // Tens of minutes
+            d3 = minutes % 10;     // Units of minutes
+        } else {
+            // Show MM:SS
+            d0 = minutes / 10;     // Tens of minutes
+            d1 = minutes % 10;     // Units of minutes
+            d2 = seconds / 10;      // Tens of seconds
+            d3 = seconds % 10;      // Units of seconds
+        }
+
+        // Call the function to update the display
+        qs_put_digits(d0, d1, d2, d3, colon);
+    }
+}
 
 
-	asdasdasfgg
+void HAL_TIM_PeriodElapsedCallback( TIM_HandleTypeDef *htim )
+{
+	uint16_t	display_value;
 
+	if (htim -> Instance == TIM2)
+	{
+		half_second ^= 1;
 
+		if (half_second) {
+			colon_on = 1;
+		}
+		else {
+			colon_on = 0;
+			seconds++;
+		if (seconds >= 60)
+		{
+			seconds = 0;
+			minutes++;
+		}
+
+		if (minutes >= 60)
+		{
+			minutes = 0;
+			hours++;
+		}
+
+		if (hours >= 24)
+		{
+			hours = 0;
+		}
+
+		}
+
+	}
 
 }
+
+
+
 /* USER CODE END 0 */
 
 /**
@@ -148,6 +245,7 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
+
 
   /* USER CODE END 1 */
 
@@ -170,6 +268,7 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_USART2_UART_Init();
+  MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -178,17 +277,24 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  button_mode();
-
+	  //button_mode();
 	  uart_print_menu();
 
-	  for (int i = 0; i < 10; i++)
+
+	  int menu_choice = -1;
+      while (menu_choice != 1 && menu_choice != 2)
+      {
+          menu_choice = uart_get_menu_choice();
+          uart_print_choice(menu_choice);
+      }
+
+	  switch (menu_choice)
 	  {
-		  uint32_t dly = 250;
-		  qs_put_big_num(i);			HAL_Delay(dly);
-		  qs_put_digits(i, i, i, i, 0); HAL_Delay(dly);
-		  qs_put_digits(i, i, i, i, 1); HAL_Delay(dly);
+	  case 1:		clock_mode(); 				break;
+	  case 2: 		button_mode(); 				break;
 	  }
+
+
 
     /* USER CODE END WHILE */
 
@@ -225,7 +331,6 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLQ = 7;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
-
     Error_Handler();
   }
 
@@ -242,6 +347,52 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+}
+
+/**
+  * @brief TIM2 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM2_Init(void)
+{
+
+  /* USER CODE BEGIN TIM2_Init 0 */
+
+  /* USER CODE END TIM2_Init 0 */
+
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM2_Init 1 */
+
+  /* USER CODE END TIM2_Init 1 */
+  htim2.Instance = TIM2;
+  htim2.Init.Prescaler = 9000-1;
+  htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim2.Init.Period = 10499;
+  htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim2, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim2, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM2_Init 2 */
+
+
+  /* USER CODE END TIM2_Init 2 */
+
 }
 
 /**
@@ -300,17 +451,11 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pin : B1_Pin */
-  GPIO_InitStruct.Pin = B1_Pin;
+  /*Configure GPIO pins : B1_Pin MY_BTN_Pin */
+  GPIO_InitStruct.Pin = B1_Pin|MY_BTN_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(B1_GPIO_Port, &GPIO_InitStruct);
-
-  /*Configure GPIO pin : MY_BTN_Pin */
-  GPIO_InitStruct.Pin = MY_BTN_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(MY_BTN_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
   /*Configure GPIO pin : SEG_DIO_Pin */
   GPIO_InitStruct.Pin = SEG_DIO_Pin;

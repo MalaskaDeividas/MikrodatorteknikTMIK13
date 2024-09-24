@@ -67,6 +67,7 @@ Reset_Handler:
   ldr r0, =_sdata
   ldr r1, =_edata
   ldr r2, =_sidata
+				debounce_time_start = 0;
   movs r3, #0
   b LoopCopyDataInit
 
