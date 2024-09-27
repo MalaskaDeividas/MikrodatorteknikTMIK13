@@ -89,8 +89,6 @@ void button_mode(){
 				{
 					//if button still pressed after debounce, count as valid press
 					button_debounced_count++;
-					//display
-
 				}
 	            unhandled_exti = 0;
 			}
@@ -171,26 +169,24 @@ void clock_mode()
 
     while (1) {
         /*** main loop ***/
-
-        // Prepare digit values based on button state
-        uint8_t d0, d1, d2, d3; // d0: thousands, d1: hundreds, d2: tens, d3: units
-        uint8_t colon = colon_on; // Use the colon state from the timer callback
+        uint8_t d0, d1, d2, d3;
+        uint8_t colon = colon_on;
 
         if (HAL_GPIO_ReadPin(B1_GPIO_Port, B1_Pin) == GPIO_PIN_RESET) {
             // Show HH:MM
-            d0 = hours / 10;       // Tens of hours
-            d1 = hours % 10;       // Units of hours
-            d2 = minutes / 10;     // Tens of minutes
-            d3 = minutes % 10;     // Units of minutes
+            d0 = hours / 10;
+            d1 = hours % 10;
+            d2 = minutes / 10;
+            d3 = minutes % 10;
         } else {
             // Show MM:SS
-            d0 = minutes / 10;     // Tens of minutes
-            d1 = minutes % 10;     // Units of minutes
-            d2 = seconds / 10;      // Tens of seconds
-            d3 = seconds % 10;      // Units of seconds
+            d0 = minutes / 10;
+            d1 = minutes % 10;
+            d2 = seconds / 10;
+            d3 = seconds % 10;
         }
 
-        // Call the function to update the display
+
         qs_put_digits(d0, d1, d2, d3, colon);
     }
 }
@@ -368,9 +364,9 @@ static void MX_TIM2_Init(void)
 
   /* USER CODE END TIM2_Init 1 */
   htim2.Instance = TIM2;
-  htim2.Init.Prescaler = 9000-1;
+  htim2.Init.Prescaler = 6000-1;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 10499;
+  htim2.Init.Period = 7000-1;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim2) != HAL_OK)

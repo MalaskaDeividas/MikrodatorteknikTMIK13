@@ -1,60 +1,10 @@
-17:40:34 **** Incremental Build of configuration Debug for project Lab3_klocka_och_knapp ****
+14:30:26 **** Incremental Build of configuration Debug for project Lab3_klocka_och_knapp ****
 make -j8 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'uart_print_menu':
-../Core/Src/main.c:129:52: warning: implicit declaration of function 'strlen' [-Wimplicit-function-declaration]
-  129 |         HAL_UART_Transmit(&huart2, (uint8_t*)menu, strlen(menu), HAL_MAX_DELAY);
-      |                                                    ^~~~~~
-../Core/Src/main.c:21:1: note: include '<string.h>' or provide a declaration of 'strlen'
-   20 | #include "main.h"
-  +++ |+#include <string.h>
-   21 | 
-../Core/Src/main.c:129:52: warning: incompatible implicit declaration of built-in function 'strlen' [-Wbuiltin-declaration-mismatch]
-  129 |         HAL_UART_Transmit(&huart2, (uint8_t*)menu, strlen(menu), HAL_MAX_DELAY);
-      |                                                    ^~~~~~
-../Core/Src/main.c:129:52: note: include '<string.h>' or provide a declaration of 'strlen'
-../Core/Src/main.c: In function 'uart_get_menu_choice':
-../Core/Src/main.c:138:9: warning: implicit declaration of function 'sscanf' [-Wimplicit-function-declaration]
-  138 |         sscanf(str, "%d", &ret);
-      |         ^~~~~~
-../Core/Src/main.c:21:1: note: include '<stdio.h>' or provide a declaration of 'sscanf'
-   20 | #include "main.h"
-  +++ |+#include <stdio.h>
-   21 | 
-../Core/Src/main.c:138:9: warning: incompatible implicit declaration of built-in function 'sscanf' [-Wbuiltin-declaration-mismatch]
-  138 |         sscanf(str, "%d", &ret);
-      |         ^~~~~~
-../Core/Src/main.c:138:9: note: include '<stdio.h>' or provide a declaration of 'sscanf'
-../Core/Src/main.c: In function 'uart_print_choice':
-../Core/Src/main.c:149:13: warning: implicit declaration of function 'snprintf' [-Wimplicit-function-declaration]
-  149 |             snprintf(message, sizeof(message), "You picked 1.\n");
-      |             ^~~~~~~~
-../Core/Src/main.c:149:13: note: include '<stdio.h>' or provide a declaration of 'snprintf'
-../Core/Src/main.c:149:13: warning: incompatible implicit declaration of built-in function 'snprintf' [-Wbuiltin-declaration-mismatch]
-../Core/Src/main.c:149:13: note: include '<stdio.h>' or provide a declaration of 'snprintf'
-../Core/Src/main.c:159:51: warning: incompatible implicit declaration of built-in function 'strlen' [-Wbuiltin-declaration-mismatch]
-  159 |     HAL_UART_Transmit(&huart2, (uint8_t*)message, strlen(message), HAL_MAX_DELAY);
-      |                                                   ^~~~~~
-../Core/Src/main.c:159:51: note: include '<string.h>' or provide a declaration of 'strlen'
-../Core/Src/main.c: In function 'clock_mode':
-../Core/Src/main.c:194:9: warning: implicit declaration of function 'qs_put_digits' [-Wimplicit-function-declaration]
-  194 |         qs_put_digits(d0, d1, d2, d3, colon);
-      |         ^~~~~~~~~~~~~
-../Core/Src/main.c: In function 'HAL_TIM_PeriodElapsedCallback':
-../Core/Src/main.c:201:25: warning: unused variable 'display_value' [-Wunused-variable]
-  201 |         uint16_t        display_value;
-      |                         ^~~~~~~~~~~~~
-arm-none-eabi-gcc -o "Lab3_klocka_och_knapp.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/deividas/School/Prog/MKLabbar/MikrodatorteknikTMIK13/Lab3_klocka_och_knapp/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Lab3_klocka_och_knapp.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: Lab3_klocka_och_knapp.elf
- 
 arm-none-eabi-size  Lab3_klocka_och_knapp.elf 
-arm-none-eabi-objdump -h -S Lab3_klocka_och_knapp.elf  > "Lab3_klocka_och_knapp.list"
    text	   data	    bss	    dec	    hex	filename
   18496	    120	   2064	  20680	   50c8	Lab3_klocka_och_knapp.elf
 Finished building: default.size.stdout
  
-Finished building: Lab3_klocka_och_knapp.list
- 
 
-17:40:34 Build Finished. 0 errors, 9 warnings. (took 320ms)
+14:30:26 Build Finished. 0 errors, 0 warnings. (took 177ms)
 

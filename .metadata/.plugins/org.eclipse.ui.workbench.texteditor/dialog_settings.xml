@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="uart_print_bad_choice"/>
+		<item key="selection" value="uart_print_cd"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="uart_print_cd"/>
+			<item value="void uart_print_cd(UART_HandleTypeDef * huart, struct clock_data * pcd);"/>
 			<item value="uart_print_bad_choice"/>
 			<item value="uart_print_choice"/>
 			<item value="MX_TIM2_Init"/>
@@ -17,7 +19,7 @@
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item key="DIALOG_X_ORIGIN" value="782"/>
+		<item key="DIALOG_X_ORIGIN" value="599"/>
 		<item key="DIALOG_Y_ORIGIN" value="259"/>
 		<item key="DIALOG_WIDTH" value="357"/>
 		<item key="DIALOG_HEIGHT" value="422"/>

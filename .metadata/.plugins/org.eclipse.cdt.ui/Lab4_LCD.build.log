@@ -1,0 +1,39 @@
+14:59:19 **** Incremental Build of configuration Debug for project Lab4_LCD ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'uart_print_cd':
+../Core/Src/main.c:122:9: warning: implicit declaration of function 'snprintf' [-Wimplicit-function-declaration]
+  122 |         snprintf(buffer, sizeof(buffer), "%02d:%02d:%02d\r", pcd->hrs, pcd->min, pcd->sec);
+      |         ^~~~~~~~
+../Core/Src/main.c:21:1: note: include '<stdio.h>' or provide a declaration of 'snprintf'
+   20 | #include "main.h"
+  +++ |+#include <stdio.h>
+   21 | 
+../Core/Src/main.c:122:9: warning: incompatible implicit declaration of built-in function 'snprintf' [-Wbuiltin-declaration-mismatch]
+  122 |         snprintf(buffer, sizeof(buffer), "%02d:%02d:%02d\r", pcd->hrs, pcd->min, pcd->sec);
+      |         ^~~~~~~~
+../Core/Src/main.c:122:9: note: include '<stdio.h>' or provide a declaration of 'snprintf'
+../Core/Src/main.c:123:52: warning: implicit declaration of function 'strlen' [-Wimplicit-function-declaration]
+  123 |         HAL_UART_Transmit(huart, (uint8_t*)buffer, strlen(buffer), HAL_MAX_DELAY);
+      |                                                    ^~~~~~
+../Core/Src/main.c:21:1: note: include '<string.h>' or provide a declaration of 'strlen'
+   20 | #include "main.h"
+  +++ |+#include <string.h>
+   21 | 
+../Core/Src/main.c:123:52: warning: incompatible implicit declaration of built-in function 'strlen' [-Wbuiltin-declaration-mismatch]
+  123 |         HAL_UART_Transmit(huart, (uint8_t*)buffer, strlen(buffer), HAL_MAX_DELAY);
+      |                                                    ^~~~~~
+../Core/Src/main.c:123:52: note: include '<string.h>' or provide a declaration of 'strlen'
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:199:11: warning: implicit declaration of function 'TextLCD_PutChar' [-Wimplicit-function-declaration]
+  199 |           TextLCD_PutChar(&lcd, c + ASCII_CAPITAL_OFFSET);
+      |           ^~~~~~~~~~~~~~~
+../Core/Src/main.c:199:28: error: 'lcd' undeclared (first use in this function)
+  199 |           TextLCD_PutChar(&lcd, c + ASCII_CAPITAL_OFFSET);
+      |                            ^~~
+../Core/Src/main.c:199:28: note: each undeclared identifier is reported only once for each function it appears in
+make: *** [Core/Src/subdir.mk:37: Core/Src/main.o] Error 1
+"make -j8 all" terminated with exit code 2. Build might be incomplete.
+
+14:59:19 Build Failed. 2 errors, 5 warnings. (took 230ms)
+

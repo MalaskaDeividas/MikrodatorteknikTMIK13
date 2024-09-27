@@ -474,8 +474,6 @@ void button_mode(){
  80005c4:	b29a      	uxth	r2, r3
  80005c6:	4b10      	ldr	r3, [pc, #64]	@ (8000608 <button_mode+0x88>)
  80005c8:	801a      	strh	r2, [r3, #0]
-					//display
-
 				}
 	            unhandled_exti = 0;
  80005ca:	4b0b      	ldr	r3, [pc, #44]	@ (80005f8 <button_mode+0x78>)
@@ -707,12 +705,11 @@ void clock_mode()
     HAL_TIM_Base_Start_IT(&htim2);
  8000742:	4832      	ldr	r0, [pc, #200]	@ (800080c <clock_mode+0xd0>)
  8000744:	f001 fd94 	bl	8002270 <HAL_TIM_Base_Start_IT>
+
     while (1) {
         /*** main loop ***/
-
-        // Prepare digit values based on button state
-        uint8_t d0, d1, d2, d3; // d0: thousands, d1: hundreds, d2: tens, d3: units
-        uint8_t colon = colon_on; // Use the colon state from the timer callback
+        uint8_t d0, d1, d2, d3;
+        uint8_t colon = colon_on;
  8000748:	4b31      	ldr	r3, [pc, #196]	@ (8000810 <clock_mode+0xd4>)
  800074a:	781b      	ldrb	r3, [r3, #0]
  800074c:	70fb      	strb	r3, [r7, #3]
@@ -725,14 +722,14 @@ void clock_mode()
  800075a:	2b00      	cmp	r3, #0
  800075c:	d126      	bne.n	80007ac <clock_mode+0x70>
             // Show HH:MM
-            d0 = hours / 10;       // Tens of hours
+            d0 = hours / 10;
  800075e:	4b2e      	ldr	r3, [pc, #184]	@ (8000818 <clock_mode+0xdc>)
  8000760:	781b      	ldrb	r3, [r3, #0]
  8000762:	4a2e      	ldr	r2, [pc, #184]	@ (800081c <clock_mode+0xe0>)
  8000764:	fba2 2303 	umull	r2, r3, r2, r3
  8000768:	08db      	lsrs	r3, r3, #3
  800076a:	71fb      	strb	r3, [r7, #7]
-            d1 = hours % 10;       // Units of hours
+            d1 = hours % 10;
  800076c:	4b2a      	ldr	r3, [pc, #168]	@ (8000818 <clock_mode+0xdc>)
  800076e:	781a      	ldrb	r2, [r3, #0]
  8000770:	4b2a      	ldr	r3, [pc, #168]	@ (800081c <clock_mode+0xe0>)
@@ -744,14 +741,14 @@ void clock_mode()
  800077e:	005b      	lsls	r3, r3, #1
  8000780:	1ad3      	subs	r3, r2, r3
  8000782:	71bb      	strb	r3, [r7, #6]
-            d2 = minutes / 10;     // Tens of minutes
+            d2 = minutes / 10;
  8000784:	4b26      	ldr	r3, [pc, #152]	@ (8000820 <clock_mode+0xe4>)
  8000786:	781b      	ldrb	r3, [r3, #0]
  8000788:	4a24      	ldr	r2, [pc, #144]	@ (800081c <clock_mode+0xe0>)
  800078a:	fba2 2303 	umull	r2, r3, r2, r3
  800078e:	08db      	lsrs	r3, r3, #3
  8000790:	717b      	strb	r3, [r7, #5]
-            d3 = minutes % 10;     // Units of minutes
+            d3 = minutes % 10;
  8000792:	4b23      	ldr	r3, [pc, #140]	@ (8000820 <clock_mode+0xe4>)
  8000794:	781a      	ldrb	r2, [r3, #0]
  8000796:	4b21      	ldr	r3, [pc, #132]	@ (800081c <clock_mode+0xe0>)
@@ -766,14 +763,14 @@ void clock_mode()
  80007aa:	e025      	b.n	80007f8 <clock_mode+0xbc>
         } else {
             // Show MM:SS
-            d0 = minutes / 10;     // Tens of minutes
+            d0 = minutes / 10;
  80007ac:	4b1c      	ldr	r3, [pc, #112]	@ (8000820 <clock_mode+0xe4>)
  80007ae:	781b      	ldrb	r3, [r3, #0]
  80007b0:	4a1a      	ldr	r2, [pc, #104]	@ (800081c <clock_mode+0xe0>)
  80007b2:	fba2 2303 	umull	r2, r3, r2, r3
  80007b6:	08db      	lsrs	r3, r3, #3
  80007b8:	71fb      	strb	r3, [r7, #7]
-            d1 = minutes % 10;     // Units of minutes
+            d1 = minutes % 10;
  80007ba:	4b19      	ldr	r3, [pc, #100]	@ (8000820 <clock_mode+0xe4>)
  80007bc:	781a      	ldrb	r2, [r3, #0]
  80007be:	4b17      	ldr	r3, [pc, #92]	@ (800081c <clock_mode+0xe0>)
@@ -785,14 +782,14 @@ void clock_mode()
  80007cc:	005b      	lsls	r3, r3, #1
  80007ce:	1ad3      	subs	r3, r2, r3
  80007d0:	71bb      	strb	r3, [r7, #6]
-            d2 = seconds / 10;      // Tens of seconds
+            d2 = seconds / 10;
  80007d2:	4b14      	ldr	r3, [pc, #80]	@ (8000824 <clock_mode+0xe8>)
  80007d4:	781b      	ldrb	r3, [r3, #0]
  80007d6:	4a11      	ldr	r2, [pc, #68]	@ (800081c <clock_mode+0xe0>)
  80007d8:	fba2 2303 	umull	r2, r3, r2, r3
  80007dc:	08db      	lsrs	r3, r3, #3
  80007de:	717b      	strb	r3, [r7, #5]
-            d3 = seconds % 10;      // Units of seconds
+            d3 = seconds % 10;
  80007e0:	4b10      	ldr	r3, [pc, #64]	@ (8000824 <clock_mode+0xe8>)
  80007e2:	781a      	ldrb	r2, [r3, #0]
  80007e4:	4b0d      	ldr	r3, [pc, #52]	@ (800081c <clock_mode+0xe0>)
@@ -806,7 +803,7 @@ void clock_mode()
  80007f6:	713b      	strb	r3, [r7, #4]
         }
 
-        // Call the function to update the display
+
         qs_put_digits(d0, d1, d2, d3, colon);
  80007f8:	79f8      	ldrb	r0, [r7, #7]
  80007fa:	79b9      	ldrb	r1, [r7, #6]
@@ -1189,17 +1186,17 @@ static void MX_TIM2_Init(void)
  8000a1c:	4b1e      	ldr	r3, [pc, #120]	@ (8000a98 <MX_TIM2_Init+0x98>)
  8000a1e:	f04f 4280 	mov.w	r2, #1073741824	@ 0x40000000
  8000a22:	601a      	str	r2, [r3, #0]
-  htim2.Init.Prescaler = 9000-1;
+  htim2.Init.Prescaler = 6000-1;
  8000a24:	4b1c      	ldr	r3, [pc, #112]	@ (8000a98 <MX_TIM2_Init+0x98>)
- 8000a26:	f242 3227 	movw	r2, #8999	@ 0x2327
+ 8000a26:	f241 726f 	movw	r2, #5999	@ 0x176f
  8000a2a:	605a      	str	r2, [r3, #4]
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
  8000a2c:	4b1a      	ldr	r3, [pc, #104]	@ (8000a98 <MX_TIM2_Init+0x98>)
  8000a2e:	2200      	movs	r2, #0
  8000a30:	609a      	str	r2, [r3, #8]
-  htim2.Init.Period = 10499;
+  htim2.Init.Period = 7000-1;
  8000a32:	4b19      	ldr	r3, [pc, #100]	@ (8000a98 <MX_TIM2_Init+0x98>)
- 8000a34:	f642 1203 	movw	r2, #10499	@ 0x2903
+ 8000a34:	f641 3257 	movw	r2, #6999	@ 0x1b57
  8000a38:	60da      	str	r2, [r3, #12]
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
  8000a3a:	4b17      	ldr	r3, [pc, #92]	@ (8000a98 <MX_TIM2_Init+0x98>)

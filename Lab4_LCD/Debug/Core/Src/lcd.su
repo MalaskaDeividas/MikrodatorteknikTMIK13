@@ -1,0 +1,11 @@
+../Core/Src/lcd.c:12:6:My_Delay	16	static
+../Core/Src/lcd.c:45:6:TextLCD_SendNibbleWithPulseOnE	24	static
+../Core/Src/lcd.c:63:6:TextLCD_SendByte	24	static
+../Core/Src/lcd.c:85:6:TextLCD_Init	32	static
+../Core/Src/lcd.c:119:6:TextLCD_SetBacklightFlag	16	static
+../Core/Src/lcd.c:126:6:TextLCD_Home	16	static
+../Core/Src/lcd.c:132:6:TextLCD_Clear	16	static
+../Core/Src/lcd.c:137:6:TextLCD_SetDDRAMAdr	16	static
+../Core/Src/lcd.c:143:6:TextLCD_Position	24	static
+../Core/Src/lcd.c:148:6:TextLCD_PutChar	16	static
+../Core/Src/lcd.c:154:6:TextLCD_PutStr	16	static
