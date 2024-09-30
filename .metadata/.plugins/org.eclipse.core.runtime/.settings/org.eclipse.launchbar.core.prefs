@@ -1,12 +1,13 @@
 LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/arch=x86_64
 LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/name=Local
 LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/os=linux
-configDescList=org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:Lab0_blinky_ff Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:Lab1_Tarning Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:Lab2_trafikljus Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:Lab3_klocka_och_knapp Debug
+configDescList=org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:Lab0_blinky_ff Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:Lab1_Tarning Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:Lab2_trafikljus Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:Lab3_klocka_och_knapp Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:Lab4_LCD Debug
 eclipse.preferences.version=1
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:Lab0_blinky_ff\ Debug/activeLaunchMode=run
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:Lab0_blinky_ff\ Debug/activeLaunchTarget=null\:---
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:Lab1_Tarning\ Debug/activeLaunchMode=debug
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:Lab2_trafikljus\ Debug/activeLaunchMode=debug
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:Lab3_klocka_och_knapp\ Debug/activeLaunchMode=run
+org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:Lab4_LCD\ Debug/activeLaunchMode=debug
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:lab0_blinkf\ Debug/activeLaunchMode=debug
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:lab0_blinkf\ Debug/activeLaunchTarget=null\:---
