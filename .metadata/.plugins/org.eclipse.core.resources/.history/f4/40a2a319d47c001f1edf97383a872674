@@ -115,13 +115,12 @@ void HAL_TIM_PeriodElapsedCallback( TIM_HandleTypeDef *htim )
 	}
 }
 
-void uart_print_cd(UART_HandleTypeDef *huart, struct clock_data * pcd)
+void uart_print_cd(UART_HandleTypeDef *huart, struct clock_data *pcd)
 {
-	char buffer[100];
+	char buffer[20];
 
-	sprintf(buffer, "%02d:%02d:%02d\r", pcd->hrs, pcd->min, pcd->sec);
-
-	HAL_UART_Transmit(huart, (uint8_t*) buffer, strlen(buffer), HAL_MAX_DELAY);
+	snprintf(buffer, sizeof(buffer), "%02d:%02d:%02d\r", pcd->hrs, pcd->min, pcd->sec);
+	HAL_UART_Transmit(huart, (uint8_t*)buffer, strlen(buffer), HAL_MAX_DELAY);
 }
 
 void wait_for_button_press()
@@ -138,10 +137,6 @@ void wait_for_button_press()
 
 
 
-
-
-
-
 /* USER CODE END 0 */
 
 /**
@@ -153,8 +148,8 @@ int main(void)
 
   /* USER CODE BEGIN 1 */
 
-	HAL_TIM_Base_Start_IT(&htim2);
 	cd_set(&my_clock, 23, 59,45);
+	HAL_TIM_Base_Start_IT(&htim2);
 
 
 
@@ -182,10 +177,9 @@ int main(void)
   MX_TIM2_Init();
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
-
-
-
-
+  char c = 0;
+  const char ASCII_CAPITAL_OFFSET = 'A';
+  const char LETTERS_TOTAL = 'Z' - 'A';
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -200,6 +194,11 @@ int main(void)
 		  uart_print_cd(&huart2,&my_clock);
 
 	  }
+
+	  wait_for_button_press();
+	  TextLCD_PutChar(&lcd, c + ASCII_CAPITAL_OFFSET);
+	  c = (c+1) % LETTERS_TOTAL;
+
 
 
     /* USER CODE END WHILE */

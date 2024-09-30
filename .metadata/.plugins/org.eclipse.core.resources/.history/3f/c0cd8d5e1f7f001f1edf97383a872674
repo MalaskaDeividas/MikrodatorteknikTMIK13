@@ -11,20 +11,7 @@
  */
 void My_Delay(uint32_t mysec)
 {
-	uint16_t cr1  = TIM2 -> CR1;
-
-	cr1 = cr1 &~(1 << 0);
-	TIM2 -> CR1 = cr1;
-
-	TIM2 -> CNT = 0;
-
-	cr1 = cr1 | (1 << 0);
-	TIM2 ->CR1 = cr1;
-
-	while(TIM2 -> CNT < mysec)
-	{
-
-	}
+//	HAL_Delay( 1 + (mysec / 1000) );
 }
 
 #define BIT_BT   0x08
@@ -138,45 +125,35 @@ void TextLCD_SetBacklightFlag(GPIO_PinState bt)
 
 void TextLCD_Home		(TextLCDType * hlcd)
 {
-	TextLCD_SendByte(hlcd, 0x02, 0);
-	My_Delay(2000);
+
 }
 
 
 void TextLCD_Clear		(TextLCDType * hlcd)
 {
-	TextLCD_SendByte(hlcd, 0x01, 0);
-	My_Delay(2000);
+
 }
 
 void TextLCD_SetDDRAMAdr(TextLCDType * hlcd, uint8_t adr)
 {
-	uint8_t command = 0x80 | (adr & 0x7F);
-	TextLCD_SendByte(hlcd, command, 0);
-	My_Delay(40);
+
 }
 
 
-void TextLCD_Position(TextLCDType *hlcd, int col, int row)
+void TextLCD_Position	(TextLCDType * hlcd, int col, int row)
 {
-	uint8_t address = col + (row == 0 ? 0x00 : 0x40);
-	TextLCD_SetDDRAMAdr(hlcd, address);
-    // Set the DDRAM address
+
 }
 
 void TextLCD_PutChar	(TextLCDType * hlcd, char c)
 {
-	TextLCD_SendByte(hlcd, c, GPIO_PIN_SET);
-	My_Delay(40);
+
 }
 
 
 void TextLCD_PutStr		(TextLCDType * hlcd, char * str)
 {
-	while(*str)
-	{
-		TextLCD_PutChar(hlcd, *str);
-	}
+
 }
 
 

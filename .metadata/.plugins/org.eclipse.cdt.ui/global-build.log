@@ -929,3 +929,196 @@ arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -D
 ../Core/Src/main.c:199:28: note: each undeclared identifier is reported only once for each function it appears in
 make: *** [Core/Src/subdir.mk:37: Core/Src/main.o] Error 1
 "make -j8 all" terminated with exit code 2. Build might be incomplete.
+15:26:27 **** Incremental Build of configuration Debug for project Lab4_LCD ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'uart_print_cd':
+../Core/Src/main.c:122:9: warning: implicit declaration of function 'snprintf' [-Wimplicit-function-declaration]
+  122 |         snprintf(buffer, sizeof(buffer), "%02d:%02d:%02d\r", pcd->hrs, pcd->min, pcd->sec);
+      |         ^~~~~~~~
+../Core/Src/main.c:21:1: note: include '<stdio.h>' or provide a declaration of 'snprintf'
+   20 | #include "main.h"
+  +++ |+#include <stdio.h>
+   21 | 
+../Core/Src/main.c:122:9: warning: incompatible implicit declaration of built-in function 'snprintf' [-Wbuiltin-declaration-mismatch]
+  122 |         snprintf(buffer, sizeof(buffer), "%02d:%02d:%02d\r", pcd->hrs, pcd->min, pcd->sec);
+      |         ^~~~~~~~
+../Core/Src/main.c:122:9: note: include '<stdio.h>' or provide a declaration of 'snprintf'
+../Core/Src/main.c:123:52: warning: implicit declaration of function 'strlen' [-Wimplicit-function-declaration]
+  123 |         HAL_UART_Transmit(huart, (uint8_t*)buffer, strlen(buffer), HAL_MAX_DELAY);
+      |                                                    ^~~~~~
+../Core/Src/main.c:21:1: note: include '<string.h>' or provide a declaration of 'strlen'
+   20 | #include "main.h"
+  +++ |+#include <string.h>
+   21 | 
+../Core/Src/main.c:123:52: warning: incompatible implicit declaration of built-in function 'strlen' [-Wbuiltin-declaration-mismatch]
+  123 |         HAL_UART_Transmit(huart, (uint8_t*)buffer, strlen(buffer), HAL_MAX_DELAY);
+      |                                                    ^~~~~~
+../Core/Src/main.c:123:52: note: include '<string.h>' or provide a declaration of 'strlen'
+../Core/Src/main.c: At top level:
+../Core/Src/main.c:137:22: error: unknown type name 'TextLCDType'
+  137 | void TextLCD_PutChar(TextLCDType * hlcd, char c)
+      |                      ^~~~~~~~~~~
+../Core/Src/main.c:153:26: error: unknown type name 'TextLCDType'
+  153 | void TextLCD_setDDRAMAdr(TextLCDType * hlcd, uint8_t adr)
+      |                          ^~~~~~~~~~~
+../Core/Src/main.c:159:21: error: unknown type name 'TextLCDType'
+  159 | void TextLCD_SetPos(TextLCDType * hlcd, int col, int row)
+      |                     ^~~~~~~~~~~
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:222:11: warning: implicit declaration of function 'TextLCD_PutChar' [-Wimplicit-function-declaration]
+  222 |           TextLCD_PutChar(&lcd,a);
+      |           ^~~~~~~~~~~~~~~
+../Core/Src/main.c:222:28: error: 'lcd' undeclared (first use in this function)
+  222 |           TextLCD_PutChar(&lcd,a);
+      |                            ^~~
+../Core/Src/main.c:222:28: note: each undeclared identifier is reported only once for each function it appears in
+make: *** [Core/Src/subdir.mk:37: Core/Src/main.o] Error 1
+"make -j8 all" terminated with exit code 2. Build might be incomplete.
+13:30:18 **** Incremental Build of configuration Debug for project Lab4_LCD ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/lcd.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/lcd.d" -MT"Core/Src/lcd.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/lcd.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'uart_print_cd':
+../Core/Src/main.c:122:9: warning: implicit declaration of function 'sprintf' [-Wimplicit-function-declaration]
+  122 |         sprintf(buffer, "%02d:%02d:%02d\r", pcd->hrs, pcd->min, pcd->sec);
+      |         ^~~~~~~
+../Core/Src/main.c:21:1: note: include '<stdio.h>' or provide a declaration of 'sprintf'
+   20 | #include "main.h"
+  +++ |+#include <stdio.h>
+   21 | 
+../Core/Src/main.c:122:9: warning: incompatible implicit declaration of built-in function 'sprintf' [-Wbuiltin-declaration-mismatch]
+  122 |         sprintf(buffer, "%02d:%02d:%02d\r", pcd->hrs, pcd->min, pcd->sec);
+      |         ^~~~~~~
+../Core/Src/main.c:122:9: note: include '<stdio.h>' or provide a declaration of 'sprintf'
+../Core/Src/main.c:124:53: warning: implicit declaration of function 'strlen' [-Wimplicit-function-declaration]
+  124 |         HAL_UART_Transmit(huart, (uint8_t*) buffer, strlen(buffer), HAL_MAX_DELAY);
+      |                                                     ^~~~~~
+../Core/Src/main.c:21:1: note: include '<string.h>' or provide a declaration of 'strlen'
+   20 | #include "main.h"
+  +++ |+#include <string.h>
+   21 | 
+../Core/Src/main.c:124:53: warning: incompatible implicit declaration of built-in function 'strlen' [-Wbuiltin-declaration-mismatch]
+  124 |         HAL_UART_Transmit(huart, (uint8_t*) buffer, strlen(buffer), HAL_MAX_DELAY);
+      |                                                     ^~~~~~
+../Core/Src/main.c:124:53: note: include '<string.h>' or provide a declaration of 'strlen'
+arm-none-eabi-gcc -o "Lab4_LCD.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/deividas/School/Prog/MKLabbar/MikrodatorteknikTMIK13/Lab4_LCD/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Lab4_LCD.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Lab4_LCD.elf
+ 
+arm-none-eabi-size  Lab4_LCD.elf 
+arm-none-eabi-objdump -h -S Lab4_LCD.elf  > "Lab4_LCD.list"
+   text	   data	    bss	    dec	    hex	filename
+  14724	     92	   2140	  16956	   423c	Lab4_LCD.elf
+Finished building: default.size.stdout
+ 
+Finished building: Lab4_LCD.list
+ 
+13:34:27 **** Incremental Build of configuration Debug for project Lab4_LCD ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'uart_print_cd':
+../Core/Src/main.c:122:9: warning: implicit declaration of function 'sprintf' [-Wimplicit-function-declaration]
+  122 |         sprintf(buffer, "%02d:%02d:%02d\r", pcd->hrs, pcd->min, pcd->sec);
+      |         ^~~~~~~
+../Core/Src/main.c:21:1: note: include '<stdio.h>' or provide a declaration of 'sprintf'
+   20 | #include "main.h"
+  +++ |+#include <stdio.h>
+   21 | 
+../Core/Src/main.c:122:9: warning: incompatible implicit declaration of built-in function 'sprintf' [-Wbuiltin-declaration-mismatch]
+  122 |         sprintf(buffer, "%02d:%02d:%02d\r", pcd->hrs, pcd->min, pcd->sec);
+      |         ^~~~~~~
+../Core/Src/main.c:122:9: note: include '<stdio.h>' or provide a declaration of 'sprintf'
+../Core/Src/main.c:124:53: warning: implicit declaration of function 'strlen' [-Wimplicit-function-declaration]
+  124 |         HAL_UART_Transmit(huart, (uint8_t*) buffer, strlen(buffer), HAL_MAX_DELAY);
+      |                                                     ^~~~~~
+../Core/Src/main.c:21:1: note: include '<string.h>' or provide a declaration of 'strlen'
+   20 | #include "main.h"
+  +++ |+#include <string.h>
+   21 | 
+../Core/Src/main.c:124:53: warning: incompatible implicit declaration of built-in function 'strlen' [-Wbuiltin-declaration-mismatch]
+  124 |         HAL_UART_Transmit(huart, (uint8_t*) buffer, strlen(buffer), HAL_MAX_DELAY);
+      |                                                     ^~~~~~
+../Core/Src/main.c:124:53: note: include '<string.h>' or provide a declaration of 'strlen'
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:186:3: error: unknown type name 'TextLCDType'
+  186 |   TextLCDType hlcd;
+      |   ^~~~~~~~~~~
+../Core/Src/main.c:186:15: warning: unused variable 'hlcd' [-Wunused-variable]
+  186 |   TextLCDType hlcd;
+      |               ^~~~
+make: *** [Core/Src/subdir.mk:37: Core/Src/main.o] Error 1
+"make -j8 all" terminated with exit code 2. Build might be incomplete.
+13:34:48 **** Incremental Build of configuration Debug for project Lab4_LCD ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'uart_print_cd':
+../Core/Src/main.c:122:9: warning: implicit declaration of function 'sprintf' [-Wimplicit-function-declaration]
+  122 |         sprintf(buffer, "%02d:%02d:%02d\r", pcd->hrs, pcd->min, pcd->sec);
+      |         ^~~~~~~
+../Core/Src/main.c:21:1: note: include '<stdio.h>' or provide a declaration of 'sprintf'
+   20 | #include "main.h"
+  +++ |+#include <stdio.h>
+   21 | 
+../Core/Src/main.c:122:9: warning: incompatible implicit declaration of built-in function 'sprintf' [-Wbuiltin-declaration-mismatch]
+  122 |         sprintf(buffer, "%02d:%02d:%02d\r", pcd->hrs, pcd->min, pcd->sec);
+      |         ^~~~~~~
+../Core/Src/main.c:122:9: note: include '<stdio.h>' or provide a declaration of 'sprintf'
+../Core/Src/main.c:124:53: warning: implicit declaration of function 'strlen' [-Wimplicit-function-declaration]
+  124 |         HAL_UART_Transmit(huart, (uint8_t*) buffer, strlen(buffer), HAL_MAX_DELAY);
+      |                                                     ^~~~~~
+../Core/Src/main.c:21:1: note: include '<string.h>' or provide a declaration of 'strlen'
+   20 | #include "main.h"
+  +++ |+#include <string.h>
+   21 | 
+../Core/Src/main.c:124:53: warning: incompatible implicit declaration of built-in function 'strlen' [-Wbuiltin-declaration-mismatch]
+  124 |         HAL_UART_Transmit(huart, (uint8_t*) buffer, strlen(buffer), HAL_MAX_DELAY);
+      |                                                     ^~~~~~
+../Core/Src/main.c:124:53: note: include '<string.h>' or provide a declaration of 'strlen'
+arm-none-eabi-gcc -o "Lab4_LCD.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/deividas/School/Prog/MKLabbar/MikrodatorteknikTMIK13/Lab4_LCD/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Lab4_LCD.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Lab4_LCD.elf
+ 
+arm-none-eabi-size  Lab4_LCD.elf 
+arm-none-eabi-objdump -h -S Lab4_LCD.elf  > "Lab4_LCD.list"
+   text	   data	    bss	    dec	    hex	filename
+  14724	     92	   2140	  16956	   423c	Lab4_LCD.elf
+Finished building: default.size.stdout
+ 
+Finished building: Lab4_LCD.list
+ 
+13:35:21 **** Incremental Build of configuration Debug for project Lab4_LCD ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F401xE -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'uart_print_cd':
+../Core/Src/main.c:122:9: warning: implicit declaration of function 'sprintf' [-Wimplicit-function-declaration]
+  122 |         sprintf(buffer, "%02d:%02d:%02d\r", pcd->hrs, pcd->min, pcd->sec);
+      |         ^~~~~~~
+../Core/Src/main.c:21:1: note: include '<stdio.h>' or provide a declaration of 'sprintf'
+   20 | #include "main.h"
+  +++ |+#include <stdio.h>
+   21 | 
+../Core/Src/main.c:122:9: warning: incompatible implicit declaration of built-in function 'sprintf' [-Wbuiltin-declaration-mismatch]
+  122 |         sprintf(buffer, "%02d:%02d:%02d\r", pcd->hrs, pcd->min, pcd->sec);
+      |         ^~~~~~~
+../Core/Src/main.c:122:9: note: include '<stdio.h>' or provide a declaration of 'sprintf'
+../Core/Src/main.c:124:53: warning: implicit declaration of function 'strlen' [-Wimplicit-function-declaration]
+  124 |         HAL_UART_Transmit(huart, (uint8_t*) buffer, strlen(buffer), HAL_MAX_DELAY);
+      |                                                     ^~~~~~
+../Core/Src/main.c:21:1: note: include '<string.h>' or provide a declaration of 'strlen'
+   20 | #include "main.h"
+  +++ |+#include <string.h>
+   21 | 
+../Core/Src/main.c:124:53: warning: incompatible implicit declaration of built-in function 'strlen' [-Wbuiltin-declaration-mismatch]
+  124 |         HAL_UART_Transmit(huart, (uint8_t*) buffer, strlen(buffer), HAL_MAX_DELAY);
+      |                                                     ^~~~~~
+../Core/Src/main.c:124:53: note: include '<string.h>' or provide a declaration of 'strlen'
+arm-none-eabi-gcc -o "Lab4_LCD.elf" @"objects.list"   -mcpu=cortex-m4 -T"/home/deividas/School/Prog/MKLabbar/MikrodatorteknikTMIK13/Lab4_LCD/STM32F401RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Lab4_LCD.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Lab4_LCD.elf
+ 
+arm-none-eabi-size  Lab4_LCD.elf 
+arm-none-eabi-objdump -h -S Lab4_LCD.elf  > "Lab4_LCD.list"
+   text	   data	    bss	    dec	    hex	filename
+  14724	     92	   2140	  16956	   423c	Lab4_LCD.elf
+Finished building: default.size.stdout
+ 
+Finished building: Lab4_LCD.list
+ 

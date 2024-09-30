@@ -153,8 +153,8 @@ int main(void)
 
   /* USER CODE BEGIN 1 */
 
-	HAL_TIM_Base_Start_IT(&htim2);
 	cd_set(&my_clock, 23, 59,45);
+	HAL_TIM_Base_Start_IT(&htim2);
 
 
 
